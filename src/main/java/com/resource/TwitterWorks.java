@@ -18,8 +18,8 @@ import javax.ws.rs.core.Response;
 public class TwitterWorks {
     @POST
     @Path("/tweet")
-    public Response sendTweet(Request request){
-        String tweet=Request.getMessage(request);
+    public Response sendTweet(String tweet){
+        //String tweet=Request.getMessage(request);
         String ret=null;
         if(StringUtil.isEmpty(tweet)) {
             return Response.status(400,"Please Enter a valid tweet").build();
