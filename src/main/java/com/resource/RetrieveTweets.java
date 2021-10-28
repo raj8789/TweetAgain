@@ -20,7 +20,6 @@ public class RetrieveTweets {
             TwitterFactory tf = new TwitterFactory(cb.build());
             Twitter twitter = tf.getInstance();
             List<Status> statuses = twitter.getHomeTimeline();
-            System.out.println("Showing home timeline.");
             size=statuses.size();
              ar=new String[size];
             int i=0;
