@@ -10,10 +10,10 @@ public class RetrieveTweets {
     public  static  String[] latestTweet(){
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
-                .setOAuthConsumerKey("DtOw1uS0ZGAjTlxZy2ajWNfxr")
-                .setOAuthConsumerSecret("9qaRx2cp8CGwZ9F9fReGOIbQoGCIPM9wEw1E4bvS8OnO4zZA87")
-                .setOAuthAccessToken("1451106875525636098-a1t9UjpVutXX8BlStF9SKz6uckKDMU")
-                .setOAuthAccessTokenSecret("G4KhZ6AjS1q56zoxyqM8z9IGoZpA0bDYxE7l1ePla50B7");
+                .setOAuthConsumerKey("Iq2STwqt6DsfrdAX5kZz37RVP")
+                .setOAuthConsumerSecret("zhhpECdqZKhgukHibrQstKDPbXOKxEL6whLcw2fROR0U0TEoQ0")
+                .setOAuthAccessToken("1451106875525636098-LrOSaFuEOKZDGi3QjzLeAPTZQeopZR")
+                .setOAuthAccessTokenSecret("tRtzJ3BnJBJVumiX4BA15xGtwgfyiMTyMZRKCYYDZuOAF");
         String []ar=null;
         int size=0;
         try {
