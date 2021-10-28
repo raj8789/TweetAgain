@@ -6,10 +6,7 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -17,10 +14,10 @@ import javax.ws.rs.core.Response;
 @Path("/api/1.0/twitter")
 public class TwitterWorks {
     @POST
-    @Path("/tweet")
-    public Response sendTweet(String tweet){
-        //String tweet=Request.getMessage(request);
-        String ret=null;
+    @Path("/postTweet")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response sendTweet(String tweet)
+    {
         if(StringUtil.isEmpty(tweet)) {
             return Response.status(400,"Please Enter a valid tweet").build();
         }
@@ -36,8 +33,8 @@ public class TwitterWorks {
         }
     }
     @GET
-    @Path("/timeline")
-    public String[] timeline()
+    @Path("/getTimeline")
+    public String[] timeLine()
     {
            int size=RetrieveTweets.latestTweet().length;
             String ar[]=new String[size];
@@ -50,11 +47,19 @@ public class TwitterWorks {
             return ar;
     }
 }
-class Request
+class TweetPostRequest
 {
-    public static String getMessage(Request request)
+    String message;
+    TweetPostRequest()
     {
-        return null;
-    }
 
+    }
+    public String getMessage()
+    {
+        return message;
+    }
+    public  void setMessage(String message)
+    {
+                this.message=message;
+    }
 }
