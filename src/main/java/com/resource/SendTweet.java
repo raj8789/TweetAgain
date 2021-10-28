@@ -8,12 +8,6 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class SendTweet {
     public static void sendTweets(String args)throws TwitterException {
-        //String tw="";
-            /*for (int i=1;i< args.length();i++)
-            {
-                tw=tw+args[i];
-                tw=tw+"  ";
-            }*/
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
                 .setOAuthConsumerKey("DtOw1uS0ZGAjTlxZy2ajWNfxr")
