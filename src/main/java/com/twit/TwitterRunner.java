@@ -1,6 +1,6 @@
 package com.twit;
 
-import com.config.MessageQueueClient;
+
 import com.config.TWConfiguration;
 import com.resource.TwitterWorks;
 import io.dropwizard.Application;
@@ -13,7 +13,6 @@ public class TwitterRunner extends Application<TWConfiguration> {
     @Override
     public void run(TWConfiguration twConfiguration, Environment environment) throws Exception {
         System.out.println("running");
-        MessageQueueClient messageQueue = twConfiguration.getMessageQueueFactory().build(environment);
         environment.jersey().register(new TwitterWorks());
     }
 }
