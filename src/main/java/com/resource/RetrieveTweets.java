@@ -1,4 +1,5 @@
 package com.resource;
+import com.config.TWConfiguration;
 import org.eclipse.jetty.util.StringUtil;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -8,12 +9,7 @@ import twitter4j.conf.ConfigurationBuilder;
 import java.util.List;
 public class RetrieveTweets {
     public  static  String[] latestTweet(){
-        ConfigurationBuilder cb = new ConfigurationBuilder();
-        cb.setDebugEnabled(true)
-                .setOAuthConsumerKey("Iq2STwqt6DsfrdAX5kZz37RVP")
-                .setOAuthConsumerSecret("zhhpECdqZKhgukHibrQstKDPbXOKxEL6whLcw2fROR0U0TEoQ0")
-                .setOAuthAccessToken("1451106875525636098-LrOSaFuEOKZDGi3QjzLeAPTZQeopZR")
-                .setOAuthAccessTokenSecret("tRtzJ3BnJBJVumiX4BA15xGtwgfyiMTyMZRKCYYDZuOAF");
+        ConfigurationBuilder cb= TWConfiguration.configurationBuilder();
         String []ar=null;
         int size=0;
         try {
@@ -32,7 +28,6 @@ public class RetrieveTweets {
         }
         catch (TwitterException e)
         {
-
         }
         if(size==0) {
             ar[0] = "No Tweet Found on Timeline";
