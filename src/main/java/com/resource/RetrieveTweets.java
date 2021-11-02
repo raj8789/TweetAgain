@@ -10,15 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 public class RetrieveTweets {
     public  static ArrayList<String> latestTweet(){
-        ConfigurationBuilder cb= TWConfiguration.configurationBuilder();
-        ArrayList<String> ar=new ArrayList<String>();
+        ConfigurationBuilder configurationBuilder= TWConfiguration.configurationBuilder();
+        ArrayList<String> arrayList=new ArrayList<String>();
         try {
-            TwitterFactory tf = new TwitterFactory(cb.build());
+            TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
             Twitter twitter = tf.getInstance();
             List<Status> statuses = twitter.getHomeTimeline();
             for (Status status : statuses)
             {
-                ar.add(status.getText());
+                arrayList.add(status.getText());
             }
 
         }
@@ -26,10 +26,10 @@ public class RetrieveTweets {
         {
             e.printStackTrace();
         }
-        if(ar.isEmpty())
+        if(arrayList.isEmpty())
         {
-            ar.add("No Tweet Found On TimeLine");
+            arrayList.add("No Tweet Found On TimeLine");
         }
-        return ar;
+        return arrayList;
     }
 }
