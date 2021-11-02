@@ -9,7 +9,7 @@ import twitter4j.conf.ConfigurationBuilder;
 import java.util.ArrayList;
 import java.util.List;
 public class RetrieveTweets {
-    public  static ArrayList<String> latestTweet(){
+    public  static ArrayList<String> fetchLatestTweet(){
         ConfigurationBuilder configurationBuilder= TWConfiguration.configurationBuilder();
         ArrayList<String> arrayList=new ArrayList<String>();
         try {
