@@ -1,13 +1,15 @@
 package com.resource;
+
 import org.eclipse.jetty.util.StringUtil;
 import twitter4j.TwitterException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/api/1.0/twitter")
-public class SendRetrieveTweets {
+public class TwitterController{
         @POST
         @Path("/postTweet")
         @Consumes(MediaType.APPLICATION_JSON)
@@ -29,8 +31,8 @@ public class SendRetrieveTweets {
         }
         @GET
         @Path("/getTimeline")
-        public ArrayList<String> timeLine()
+        public ArrayList<String> getTweets()
         {
-            return RetrieveTweets.latestTweet();
+            return RetrieveTweets.fetchLatestTweet();
         }
 }
