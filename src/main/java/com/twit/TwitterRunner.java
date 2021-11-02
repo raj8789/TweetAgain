@@ -2,7 +2,7 @@ package com.twit;
 
 
 import com.config.TWConfiguration;
-import com.resource.SendRetrieveTweets;
+import com.resource.TwitterController;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 
@@ -12,6 +12,6 @@ public class TwitterRunner extends Application<TWConfiguration> {
     }
     @Override
     public void run(TWConfiguration twConfiguration, Environment environment) throws Exception {
-        environment.jersey().register(new SendRetrieveTweets());
+        environment.jersey().register(new TwitterController());
     }
 }
