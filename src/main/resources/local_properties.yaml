@@ -1,0 +1,8 @@
+messageQueue:
+  host:localhost
+  port:8080
+
+server:
+applicationConnectors:
+host: localhost
+port: 8080
