@@ -13,8 +13,8 @@ public class RetrieveTweets {
         ConfigurationBuilder configurationBuilder= TWConfiguration.configurationBuilder();
         ArrayList<String> arrayList=new ArrayList<String>();
         try {
-            TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
-            Twitter twitter = tf.getInstance();
+            TwitterFactory twitterFactory = new TwitterFactory(configurationBuilder.build());
+            Twitter twitter = twitterFactory.getInstance();
             List<Status> statuses = twitter.getHomeTimeline();
             for (Status status : statuses)
             {
