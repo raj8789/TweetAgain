@@ -9,9 +9,9 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class SendTweet {
     public static void sendTweets(String args)throws TwitterException {
-        ConfigurationBuilder cb= TWConfiguration.configurationBuilder();
-        TwitterFactory tf = new TwitterFactory(cb.build());
-        Twitter twitter = tf.getInstance();
+        ConfigurationBuilder configurationBuilder= TWConfiguration.configurationBuilder();
+        TwitterFactory twitterFactory = new TwitterFactory(configurationBuilder.build());
+        Twitter twitter = twitterFactory.getInstance();
         Status status = null;
         try {
             status = twitter.updateStatus(args);
