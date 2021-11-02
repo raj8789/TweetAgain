@@ -1,36 +1,34 @@
 package com.resource;
 import com.config.TWConfiguration;
-import org.eclipse.jetty.util.StringUtil;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
+
+import java.util.ArrayList;
 import java.util.List;
 public class RetrieveTweets {
-    public  static  String[] latestTweet(){
+    public  static ArrayList<String> latestTweet(){
         ConfigurationBuilder cb= TWConfiguration.configurationBuilder();
-        String []ar=null;
-        int size=0;
+        ArrayList<String> ar=new ArrayList<String>();
         try {
             TwitterFactory tf = new TwitterFactory(cb.build());
             Twitter twitter = tf.getInstance();
             List<Status> statuses = twitter.getHomeTimeline();
-            size=statuses.size();
-             ar=new String[size];
-            int i=0;
-            for (Status status1 : statuses)
+            for (Status status : statuses)
             {
-                ar[i]=status1.getText();
-                i++;
+                ar.add(status.getText());
             }
 
         }
         catch (TwitterException e)
         {
+            e.printStackTrace();
         }
-        if(size==0) {
-            ar[0] = "No Tweet Found on Timeline";
+        if(ar.isEmpty())
+        {
+            ar.add("No Tweet Found On TimeLine");
         }
         return ar;
     }
