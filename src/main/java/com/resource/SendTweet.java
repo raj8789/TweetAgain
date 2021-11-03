@@ -7,8 +7,10 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
+import javax.ws.rs.core.Response;
+
 public class SendTweet {
-    public static void sendTweets(String args)throws TwitterException {
+    public static Status sendTweets(String args)throws TwitterException {
         ConfigurationBuilder configurationBuilder= TWConfiguration.configurationBuilder();
         TwitterFactory twitterFactory = new TwitterFactory(configurationBuilder.build());
         Twitter twitter = twitterFactory.getInstance();
@@ -18,6 +20,6 @@ public class SendTweet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Successfully updated the status to [" + status.getText() + "].");
+        return status;
     }
 }

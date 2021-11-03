@@ -1,11 +1,11 @@
 package com.resource;
 
 import org.eclipse.jetty.util.StringUtil;
+import twitter4j.Status;
 import twitter4j.TwitterException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/api/1.0/twitter")
@@ -20,18 +20,25 @@ public class TwitterController{
             }
             else {
                 try {
-                    SendTweet.sendTweets(tweet);
+                    Status status=SendTweet.sendTweets(tweet);
+                    if(status.getText().equals(tweet))
+                    {
+                        return Response.status(200,"Tweeted Successfully").build();
+                    }
+                    else
+                    {
+                        return Response.status(500,"Request was not completed").build();
+                    }
                 }
                 catch (TwitterException e)
                 {
                     return Response.status(500,"Request Was Not Completed").build();
                 }
-                return Response.status(200,"Tweeted Successfully").build();
             }
         }
         @GET
         @Path("/getTimeline")
-        public ArrayList<String> getTweets()
+        public Response getTweets()
         {
             return RetrieveTweets.fetchLatestTweet();
         }
