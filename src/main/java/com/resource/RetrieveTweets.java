@@ -6,10 +6,11 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 public class RetrieveTweets {
-    public  static ArrayList<String> fetchLatestTweet(){
+    public  static Response fetchLatestTweet(){
         ConfigurationBuilder configurationBuilder= TWConfiguration.configurationBuilder();
         ArrayList<String> arrayList=new ArrayList<String>();
         try {
@@ -30,6 +31,6 @@ public class RetrieveTweets {
         {
             arrayList.add("No Tweet Found On TimeLine");
         }
-        return arrayList;
+        return Response.ok(arrayList).build();
     }
 }
