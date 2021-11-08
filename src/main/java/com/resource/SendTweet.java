@@ -7,16 +7,28 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
-import javax.ws.rs.core.Response;
 
 public class SendTweet {
-    public static Status sendTweets(String args)throws TwitterException {
-        ConfigurationBuilder configurationBuilder= TWConfiguration.configurationBuilder();
+    TWConfiguration twConfiguration;
+    public SendTweet(TWConfiguration twConfiguration)
+    {
+        this.twConfiguration=twConfiguration;
+    }
+    public SendTweet()
+    {
+
+    }
+    public  Status sendTweets(String args) throws TwitterException {
+        TWConfiguration twConfiguration=new TWConfiguration();
+        ConfigurationBuilder configurationBuilder = twConfiguration.configurationBuilder();
         TwitterFactory twitterFactory = new TwitterFactory(configurationBuilder.build());
         Twitter twitter = twitterFactory.getInstance();
         Status status = null;
         try {
-            status = twitter.updateStatus(args);
+            if(args.length()!=0)
+             status = twitter.updateStatus(args);
+            else
+                status=null;
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,14 +1,15 @@
 package com.resource;
-public class TweetPostRequest
-{
+
+public class TweetPostRequest {
     String message;
-    TweetPostRequest()
-    {
+
+   public TweetPostRequest() {
     }
-    public String getMessage()
-    {
+
+    public String getMessage() {
         return message;
     }
+
     public void setMessage(String message) {
         this.message = message;
     }
