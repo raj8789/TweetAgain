@@ -52,4 +52,28 @@ public class RetrieveTweetsTest {
         Response actualTweet=retrieveTweets.fetchLatestTweet();
         Assert.assertEquals(expectedTweet.getLength(),actualTweet.getLength());
     }
+    @Test
+    public void testCase_fetchNoTweetOnTimeline_successCase()
+    {
+        when(twConfiguration.configurationBuilder()).thenReturn(new ConfigurationBuilder());
+        ArrayList<String> arrayList = new ArrayList<>();
+        TWConfiguration twConfiguration=new TWConfiguration();
+        ConfigurationBuilder configurationBuilder = twConfiguration.configurationBuilder();
+        try {
+            TwitterFactory twitterFactory = new TwitterFactory(configurationBuilder.build());
+            Twitter twitter = twitterFactory.getInstance();
+            List<Status> statuses = twitter.getHomeTimeline();
+            for (Status status : statuses) {
+                arrayList.add(status.getText());
+            }
+
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+        if(arrayList.isEmpty())
+            arrayList.add("No Tweets found on Timeline");
+        Response expectedTweet= Response.ok(arrayList).build();
+        Response actualTweet=retrieveTweets.fetchLatestTweet();
+        Assert.assertEquals(expectedTweet.getLength(),actualTweet.getLength());
+    }
 }

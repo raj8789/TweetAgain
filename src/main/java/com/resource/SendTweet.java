@@ -7,7 +7,6 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
-
 public class SendTweet {
     TWConfiguration twConfiguration;
     public SendTweet(TWConfiguration twConfiguration)
@@ -16,7 +15,6 @@ public class SendTweet {
     }
     public SendTweet()
     {
-
     }
     public  Status sendTweets(String args) throws TwitterException {
         TWConfiguration twConfiguration=new TWConfiguration();
@@ -30,7 +28,10 @@ public class SendTweet {
             else
                 status=null;
         } catch (Exception e) {
-            e.printStackTrace();
+            if(args.length()>280)
+               throw new TwitterException("Tweet needs to be a shorter");
+            if(status.isRetweetedByMe())
+                throw new TwitterException("Tweet is duplicate tweet");
         }
         return status;
     }

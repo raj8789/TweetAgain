@@ -3,7 +3,6 @@ package com.resource;
 import org.eclipse.jetty.util.StringUtil;
 import twitter4j.Status;
 import twitter4j.TwitterException;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -13,7 +12,7 @@ import javax.ws.rs.core.Response;
 public class TwitterController {
     @POST
     @Path("/postTweet")
-    @Consumes(MediaType.APPLICATION_JSON)
+    //@Consumes(MediaType.APPLICATION_JSON)
     public Response sendTweet(TweetPostRequest tweetPostRequest) {
         String tweet = tweetPostRequest.getMessage();
         if (StringUtil.isEmpty(tweet)) {

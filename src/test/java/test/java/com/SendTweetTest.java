@@ -32,7 +32,7 @@ public class SendTweetTest {
     public void testCase_sendTweet_successCase()
     {
         when(twConfiguration.configurationBuilder()).thenReturn(new ConfigurationBuilder());
-        tweetPostRequest.setMessage("Anjali is my love");
+        tweetPostRequest.setMessage("Pushplata");
         String expectedTweet=tweetPostRequest.getMessage();
         Status status=null;
         try {
@@ -42,6 +42,34 @@ public class SendTweetTest {
         }
         String actualTweet=status.getText();
         Assert.assertEquals(expectedTweet,actualTweet);
+    }
+    @Test
+    public void testCase_sendTweet_checkLength_successCase()
+    {
+        when(twConfiguration.configurationBuilder()).thenReturn(new ConfigurationBuilder());
+        tweetPostRequest.setMessage("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        +"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        String expectedTweetNoNull=tweetPostRequest.getMessage();
+        String actualTweet="";
+        String expectedTweet="";
+            Status status = null;
+            try {
+                status = sendTweet.sendTweets(expectedTweet);
+            } catch (TwitterException e) {
+                 actualTweet=e.getMessage();
+                 expectedTweet="Tweet needs to be a shorter";
+            }
+        if(expectedTweetNoNull.length()<280) {
+             actualTweet = status.getText();
+            Assert.assertEquals(expectedTweetNoNull, actualTweet);
+        }
+        else
+        {
+            Assert.assertEquals(expectedTweet,actualTweet);
+        }
     }
     @Test
     public void testCase_NoTweetSend_successCase()
@@ -65,7 +93,6 @@ public class SendTweetTest {
         if(status==null)
         {
             expectedLength = expectedTweet.length();
-            actuallength=0;
         }
         else {
             expectedLength=expectedTweet.length();
@@ -73,6 +100,21 @@ public class SendTweetTest {
         }
 
         Assert.assertEquals(expectedLength,actuallength);
+    }
+    @Test
+    public void testCase_sendReTweetedTweet_successCase()
+    {
+        when(twConfiguration.configurationBuilder()).thenReturn(new ConfigurationBuilder());
+        tweetPostRequest.setMessage("shyam");
+        String expectedTweet="Tweet is duplicate tweet";
+        String actualTweet="";
+        Status status=null;
+        try {
+            status=sendTweet.sendTweets(tweetPostRequest.getMessage());
+        } catch (TwitterException e) {
+            actualTweet=e.getMessage();
+        }
+        Assert.assertEquals(expectedTweet,actualTweet);
     }
 
 }
