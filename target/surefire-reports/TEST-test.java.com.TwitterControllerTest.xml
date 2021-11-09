@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="1" failures="0" name="test.java.com.TwitterControllerTest" time="1.022" errors="1" skipped="0">
+  <properties>
+    <property name="idea.version" value="2021.2.3"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib"/>
+    <property name="java.vm.version" value="25.191-b12"/>
+    <property name="gopherProxySet" value="false"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="/Users/lithiumloaner2/TweetAgain"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=":"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="IN"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/Users/lithiumloaner2/TweetAgain"/>
+    <property name="java.runtime.version" value="1.8.0_191-b12"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/endorsed"/>
+    <property name="os.arch" value="x86_64"/>
+    <property name="java.io.tmpdir" value="/var/folders/8x/wzcjszxs15j06h9g5g4jzx0m0000gn/T/"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="maven.ext.class.path" value="/Applications/IntelliJ IDEA CE.app/Contents/plugins/maven/lib/maven-event-listener.jar"/>
+    <property name="classworlds.conf" value="/Applications/IntelliJ IDEA CE.app/Contents/plugins/maven/lib/maven3/bin/m2.conf"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/Users/lithiumloaner2/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="maven.conf" value="/Applications/IntelliJ IDEA CE.app/Contents/plugins/maven/lib/maven3/conf"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.14.6"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="user.home" value="/Users/lithiumloaner2"/>
+    <property name="user.timezone" value="Asia/Kolkata"/>
+    <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="user.name" value="lithiumloaner2"/>
+    <property name="java.class.path" value="/Applications/IntelliJ IDEA CE.app/Contents/plugins/maven/lib/maven3/boot/plexus-classworlds.license:/Applications/IntelliJ IDEA CE.app/Contents/plugins/maven/lib/maven3/boot/plexus-classworlds-2.6.0.jar:/Applications/IntelliJ IDEA CE.app/Contents/lib/idea_rt.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre"/>
+    <property name="sun.java.command" value="org.codehaus.classworlds.Launcher -Didea.version=2021.2.3 install"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="en"/>
+    <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_191"/>
+    <property name="java.ext.dirs" value="/Users/lithiumloaner2/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java"/>
+    <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="/Applications/IntelliJ IDEA CE.app/Contents/plugins/maven/lib/maven3"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase classname="test.java.com.TwitterControllerTest" name="testCase_tweeterController_sendTweet" time="1.022">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at com.resource.TwitterController.sendTweet(TwitterController.java:25)
+	at test.java.com.TwitterControllerTest.testCase_tweeterController_sendTweet(TwitterControllerTest.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.mockito.internal.runners.DefaultInternalRunner$1$1.evaluate(DefaultInternalRunner.java:55)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.mockito.internal.runners.DefaultInternalRunner$1.run(DefaultInternalRunner.java:100)
+	at org.mockito.internal.runners.DefaultInternalRunner.run(DefaultInternalRunner.java:107)
+	at org.mockito.internal.runners.StrictRunner.run(StrictRunner.java:41)
+	at org.mockito.junit.MockitoJUnitRunner.run(MockitoJUnitRunner.java:163)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+</error>
+    <system-out>16:42:20.803 [main] DEBUG twitter4j.HttpClientImpl - Request: 
+16:42:20.806 [main] DEBUG twitter4j.HttpClientImpl - POST https://api.twitter.com/1.1/statuses/update.json
+16:42:20.807 [main] DEBUG twitter4j.auth.OAuthAuthorization - OAuth base string: POST&amp;https%3A%2F%2Fapi.twitter.com%2F1.1%2Fstatuses%2Fupdate.json&amp;include_entities%3Dtrue%26include_ext_alt_text%3Dtrue%26oauth_consumer_key%3DIq2STwqt6DsfrdAX5kZz37RVP%26oauth_nonce%3D2523533730%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1636369940%26oauth_token%3D1451106875525636098-LrOSaFuEOKZDGi3QjzLeAPTZQeopZR%26oauth_version%3D1.0%26status%3DBiren%26tweet_mode%3Dextended
+16:42:20.836 [main] DEBUG twitter4j.auth.OAuthAuthorization - OAuth signature: sbP4yNLf9fT+CtF8r3R5dl1yFyQ=
+16:42:20.837 [main] DEBUG twitter4j.HttpClientImpl - Authorization: *************************************************************************************************************************************************************************************************************************************************************************************
+16:42:20.837 [main] DEBUG twitter4j.HttpClientImpl - X-Twitter-Client-Version: 4.0.7
+16:42:20.837 [main] DEBUG twitter4j.HttpClientImpl - X-Twitter-Client-URL: http://twitter4j.org/en/twitter4j-4.0.7.xml
+16:42:20.837 [main] DEBUG twitter4j.HttpClientImpl - X-Twitter-Client: Twitter4J
+16:42:20.837 [main] DEBUG twitter4j.HttpClientImpl - User-Agent: twitter4j http://twitter4j.org/ /4.0.7
+16:42:20.838 [main] DEBUG twitter4j.HttpClientImpl - Accept-Encoding: gzip
+16:42:20.838 [main] DEBUG twitter4j.HttpClientImpl - Post Params: status=Biren&amp;include_entities=true&amp;include_ext_alt_text=true&amp;tweet_mode=extended
+16:42:21.305 [main] DEBUG twitter4j.HttpClientImpl - Response: 
+16:42:21.305 [main] DEBUG twitter4j.HttpClientImpl - date: Mon, 08 Nov 2021 11:12:21 GMT
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - HTTP/1.1 403 Forbidden
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - content-length: 85
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - server: tsa_k
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - expires: Tue, 31 Mar 1981 05:00:00 GMT
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - x-response-time: 190
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - content-encoding: gzip
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - x-frame-options: SAMEORIGIN
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - x-transaction: 8993a31dda47f4eb
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - strict-transport-security: max-age=631138519
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - pragma: no-cache
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - last-modified: Mon, 08 Nov 2021 11:12:21 GMT
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - set-cookie: guest_id=v1%3A163636994116721594; Max-Age=63072000; Expires=Wed, 08 Nov 2023 11:12:21 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - set-cookie: lang=en; Path=/
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - set-cookie: personalization_id=&quot;v1_iBBgDB980H/lDGwDoHWzGA==&quot;; Max-Age=63072000; Expires=Wed, 08 Nov 2023 11:12:21 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - x-content-type-options: nosniff
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - content-disposition: attachment; filename=json.json
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - x-xss-protection: 0
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - x-connection-hash: 54bd3fea7ae9df333b2887f13e091f34fd29c45e33d7f524e845a15e5b5c5346
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - x-access-level: read-write-directmessages
+16:42:21.306 [main] DEBUG twitter4j.HttpClientImpl - x-twitter-response-tags: BouncerCompliant
+16:42:21.307 [main] DEBUG twitter4j.HttpClientImpl - content-type: application/json;charset=utf-8
+16:42:21.307 [main] DEBUG twitter4j.HttpClientImpl - cache-control: no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+16:42:21.307 [main] DEBUG twitter4j.HttpClientImpl - status: 403 Forbidden
+16:42:21.308 [main] DEBUG twitter4j.HttpResponseImpl - {&quot;errors&quot;:[{&quot;code&quot;:187,&quot;message&quot;:&quot;Status is a duplicate.&quot;}]}
+
+</system-out>
+    <system-err>403:The request is understood, but it has been refused. An accompanying error message will explain why. This code is used when requests are being denied due to update limits (https://support.twitter.com/articles/15364-about-twitter-limits-update-api-dm-and-following).
+message - Status is a duplicate.
+code - 187
+
+Relevant discussions can be found on the Internet at:
+	http://www.google.co.jp/search?q=2fc5b7cb or
+	http://www.google.co.jp/search?q=1051ec03
+TwitterException{exceptionCode=[2fc5b7cb-1051ec03], statusCode=403, message=Status is a duplicate., code=187, retryAfter=-1, rateLimitStatus=null, version=4.0.7}
+	at twitter4j.HttpClientImpl.handleRequest(HttpClientImpl.java:170)
+	at twitter4j.HttpClientBase.request(HttpClientBase.java:57)
+	at twitter4j.HttpClientBase.post(HttpClientBase.java:86)
+	at twitter4j.TwitterImpl.post(TwitterImpl.java:2120)
+	at twitter4j.TwitterImpl.updateStatus(TwitterImpl.java:228)
+	at com.resource.SendTweet.sendTweets(SendTweet.java:29)
+	at com.resource.TwitterController.sendTweet(TwitterController.java:24)
+	at test.java.com.TwitterControllerTest.testCase_tweeterController_sendTweet(TwitterControllerTest.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.mockito.internal.runners.DefaultInternalRunner$1$1.evaluate(DefaultInternalRunner.java:55)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.mockito.internal.runners.DefaultInternalRunner$1.run(DefaultInternalRunner.java:100)
+	at org.mockito.internal.runners.DefaultInternalRunner.run(DefaultInternalRunner.java:107)
+	at org.mockito.internal.runners.StrictRunner.run(StrictRunner.java:41)
+	at org.mockito.junit.MockitoJUnitRunner.run(MockitoJUnitRunner.java:163)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+</system-err>
+  </testcase>
+</testsuite>

@@ -26,6 +26,5 @@ public class TwitterControllerTest {
     {
         tweetPostRequest.setMessage("Biren");
          Response responseActual= twitterController.sendTweet(tweetPostRequest);
-         System.out.println(responseActual);
     }
 }
