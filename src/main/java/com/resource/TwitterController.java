@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 public class TwitterController {
     @POST
     @Path("/postTweet")
-    //@Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response sendTweet(TweetPostRequest tweetPostRequest) {
         String tweet = tweetPostRequest.getMessage();
         if (StringUtil.isEmpty(tweet)) {
@@ -31,7 +31,6 @@ public class TwitterController {
             }
         }
     }
-
     @GET
     @Path("/getTimeline")
     public Response getTweets() {
