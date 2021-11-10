@@ -32,7 +32,7 @@ public class SendTweetTest {
     public void testCase_sendTweet_successCase()
     {
         when(twConfiguration.configurationBuilder()).thenReturn(new ConfigurationBuilder());
-        tweetPostRequest.setMessage("happy");
+        tweetPostRequest.setMessage("Sad moment missing Home");
         String expectedTweet=tweetPostRequest.getMessage();
         Status status=null;
         try {
@@ -105,7 +105,7 @@ public class SendTweetTest {
     public void testCase_sendReTweetedTweet_successCase()
     {
         when(twConfiguration.configurationBuilder()).thenReturn(new ConfigurationBuilder());
-        tweetPostRequest.setMessage("shyam");
+        tweetPostRequest.setMessage("Raj");
         String expectedTweet="Tweet is duplicate tweet";
         String actualTweet="";
         Status status=null;

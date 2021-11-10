@@ -13,10 +13,12 @@ import javax.ws.rs.core.Response;
 public class TwitterController {
     TweetPostRequest tweetPostRequest;
     SendTweet sendTweet;
+    RetrieveTweets retrieveTweets;
 
-    public TwitterController(TweetPostRequest tweetPostRequest, SendTweet sendTweet) {
+    public TwitterController(TweetPostRequest tweetPostRequest, SendTweet sendTweet,RetrieveTweets retrieveTweets) {
         this.tweetPostRequest = tweetPostRequest;
         this.sendTweet = sendTweet;
+        this.retrieveTweets=retrieveTweets;
     }
 
     public TwitterController() {
