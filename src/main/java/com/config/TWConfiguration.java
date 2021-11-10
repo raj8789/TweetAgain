@@ -2,16 +2,42 @@ package com.config;
 
 import io.dropwizard.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 
 public class TWConfiguration extends Configuration {
-
+    String filepath="twitter4j.yml";
+    String accessTokenSecret="";
+    String consumerSecret="";
+    String consumerKey="";
+    String accessToken="";
+    Properties properties=new Properties();
+    FileInputStream fileInputStream;
+    {
+        try {
+            fileInputStream = new FileInputStream(filepath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            properties.load(fileInputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        accessTokenSecret= properties.getProperty("accessTokenSecret");
+        consumerSecret= properties.getProperty("consumerSecret");
+        consumerKey= properties.getProperty("consumerKey");
+        accessToken= properties.getProperty("accessToken");
+    }
     public ConfigurationBuilder configurationBuilder() {
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.setDebugEnabled(true)
-                .setOAuthConsumerKey("Iq2STwqt6DsfrdAX5kZz37RVP")
-                .setOAuthConsumerSecret("zhhpECdqZKhgukHibrQstKDPbXOKxEL6whLcw2fROR0U0TEoQ0")
-                .setOAuthAccessToken("1451106875525636098-LrOSaFuEOKZDGi3QjzLeAPTZQeopZR")
-                .setOAuthAccessTokenSecret("tRtzJ3BnJBJVumiX4BA15xGtwgfyiMTyMZRKCYYDZuOAF");
+                .setOAuthConsumerKey(consumerKey)
+                .setOAuthConsumerSecret(consumerSecret)
+                .setOAuthAccessToken(accessToken)
+                .setOAuthAccessTokenSecret(accessTokenSecret);
         return configurationBuilder;
     }
 }
