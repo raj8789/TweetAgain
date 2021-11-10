@@ -30,8 +30,10 @@ public class SendTweet {
         } catch (Exception e) {
             if(args.length()>280)
                throw new TwitterException("Tweet needs to be a shorter");
-            if(status.isRetweetedByMe())
+            if(status==null)
+            {
                 throw new TwitterException("Tweet is duplicate tweet");
+            }
         }
         return status;
     }
