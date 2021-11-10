@@ -32,7 +32,7 @@ public class SendTweetTest {
     public void testCase_sendTweet_successCase()
     {
         when(twConfiguration.configurationBuilder()).thenReturn(new ConfigurationBuilder());
-        tweetPostRequest.setMessage("Pushplata");
+        tweetPostRequest.setMessage("happy");
         String expectedTweet=tweetPostRequest.getMessage();
         Status status=null;
         try {
