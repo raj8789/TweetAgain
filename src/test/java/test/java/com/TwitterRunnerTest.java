@@ -8,14 +8,15 @@ import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import static org.mockito.Mockito.when;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class TwitterRunnerTest {
     TwitterRunner twitterRunner;
     TWConfiguration twConfiguration;
     Environment environment;
     TwitterController twitterController;
+    Logger logger= LoggerFactory.getLogger(TwitterRunnerTest.class);
     @BeforeEach
     void setUp() {
         twConfiguration= Mockito.mock(TWConfiguration.class);
@@ -33,6 +34,7 @@ class TwitterRunnerTest {
         catch (Exception e)
         {
             e.getMessage();
+            logger.error("Exception occur",e);
         }
     }
 
@@ -44,6 +46,7 @@ class TwitterRunnerTest {
         catch (Exception e)
         {
             e.getMessage();
+            logger.error("Exception occur",e);
         }
 
         Assert.assertTrue(true);

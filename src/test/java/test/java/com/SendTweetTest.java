@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 import twitter4j.conf.ConfigurationBuilder;
@@ -19,14 +21,13 @@ public class SendTweetTest {
     SendTweet sendTweet;
     TWConfiguration twConfiguration;  // Mock object reference Variable
     TweetPostRequest tweetPostRequest;
-
+    Logger logger= LoggerFactory.getLogger(SendTweetTest.class);
     @Before
     public void seTup()
     {
             twConfiguration= Mockito.mock(TWConfiguration.class);
             sendTweet=new SendTweet(twConfiguration);
             tweetPostRequest=new TweetPostRequest();
-
     }
     @Test
     public void testCase_sendTweet_successCase()
@@ -38,7 +39,7 @@ public class SendTweetTest {
         try {
              status=sendTweet.sendTweets(expectedTweet);
         } catch (TwitterException e) {
-            e.printStackTrace();
+            logger.error("Exception Occur",e);
         }
         String actualTweet=status.getText();
         Assert.assertEquals(expectedTweet,actualTweet);
@@ -61,6 +62,7 @@ public class SendTweetTest {
             } catch (TwitterException e) {
                  actualTweet=e.getMessage();
                  expectedTweet="Tweet needs to be a shorter";
+                 logger.error("Exception occur",e);
             }
         if(expectedTweetNoNull.length()<280) {
              actualTweet = status.getText();
@@ -81,7 +83,7 @@ public class SendTweetTest {
         try {
             status=sendTweet.sendTweets(expectedTweet);
         } catch (TwitterException e) {
-            e.printStackTrace();
+            logger.error("Exception occur",e);
         }
         int expectedLength=0;
         int actuallength=0;
@@ -113,6 +115,7 @@ public class SendTweetTest {
             status=sendTweet.sendTweets(tweetPostRequest.getMessage());
         } catch (TwitterException e) {
             actualTweet=e.getMessage();
+            logger.error("Exception occur",e);
         }
         Assert.assertEquals(expectedTweet,actualTweet);
     }

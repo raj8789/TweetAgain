@@ -10,10 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import twitter4j.TwitterException;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
-
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -22,6 +23,7 @@ public class TwitterControllerTest {
     TweetPostRequest tweetPostRequest;
     SendTweet sendTweet;
     RetrieveTweets retrieveTweets;
+    Logger logger= LoggerFactory.getLogger(TwitterControllerTest.class);
     @Before
     public void setUp()
     {
@@ -49,6 +51,7 @@ public class TwitterControllerTest {
         catch (NullPointerException e)
         {
             actual=e.getMessage();
+            logger.error("Exception occur",e);
         }
         Response responseExpected= Response.ok("Stay calm").build();
         Assert.assertEquals(response,actual);

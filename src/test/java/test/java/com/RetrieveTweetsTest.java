@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -23,7 +25,7 @@ import static org.mockito.Mockito.when;
 public class RetrieveTweetsTest {
     TWConfiguration twConfiguration;
     RetrieveTweets retrieveTweets;
-
+    Logger logger= LoggerFactory.getLogger(RetrieveTweetsTest.class);
     @Before
     public void setUp()
     {
@@ -46,7 +48,7 @@ public class RetrieveTweetsTest {
             }
 
         } catch (TwitterException e) {
-            e.printStackTrace();
+            logger.error("Status Not found Exception Occur",e);
         }
         Response expectedTweet= Response.ok(arrayList).build();
         Response actualTweet=retrieveTweets.fetchLatestTweet();
@@ -68,7 +70,7 @@ public class RetrieveTweetsTest {
             }
 
         } catch (TwitterException e) {
-            e.printStackTrace();
+            logger.error("Status Not found Exception Occur",e);
         }
         if(arrayList.isEmpty())
             arrayList.add("No Tweets found on Timeline");

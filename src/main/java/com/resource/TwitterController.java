@@ -1,9 +1,11 @@
 package com.resource;
 
+
 import org.eclipse.jetty.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import twitter4j.Status;
 import twitter4j.TwitterException;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,7 +16,7 @@ public class TwitterController {
     TweetPostRequest tweetPostRequest;
     SendTweet sendTweet;
     RetrieveTweets retrieveTweets;
-
+    private Logger logger= LoggerFactory.getLogger(TwitterController.class);
     public TwitterController(TweetPostRequest tweetPostRequest, SendTweet sendTweet,RetrieveTweets retrieveTweets) {
         this.tweetPostRequest = tweetPostRequest;
         this.sendTweet = sendTweet;
@@ -30,6 +32,7 @@ public class TwitterController {
         String tweet = tweetPostRequest.getMessage();
         if (StringUtil.isEmpty(tweet))
         {
+            logger.error("Enter a Valid Tweet");
             return Response.status(400, "Please Enter a valid tweet").build();
         }
         else
@@ -38,18 +41,23 @@ public class TwitterController {
             {
                 SendTweet sendTweet = new SendTweet();
                 Status  status= sendTweet.sendTweets(tweet);
-                if (status.getText().equals(tweet)) {
+                if (status.getText().equals(tweet))
+                {
+                    logger.info("Tweet Send Successfully");
                     return Response.status(200, "Tweeted Successfully").build();
                 } else {
+                    logger.error("Tweet Was Not Done Invalid Request");
                     return Response.status(500, "Request was not completed").build();
                 }
             }
             catch (TwitterException e)
             {
+                logger.error("Tweet Was Not Done Invalid Request");
                 return Response.status(500, "Request Was Not Completed").build();
             }
             catch (NullPointerException e)
             {
+                logger.error("Status Was Not found so Not Able to tweet");
                 throw new NullPointerException("Not Able To Tweet");
             }
         }
