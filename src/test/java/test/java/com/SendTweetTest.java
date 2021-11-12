@@ -1,8 +1,8 @@
 package test.java.com;
 
-import com.config.TWConfiguration;
-import com.resource.SendTweet;
+import com.service.SendTweet;
 import com.resource.TweetPostRequest;
+import com.service.TwitterImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,29 +12,35 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Status;
+import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.conf.ConfigurationBuilder;
+
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SendTweetTest {
     SendTweet sendTweet;
-    TWConfiguration twConfiguration;  // Mock object reference Variable
+    TwitterImpl twitterImpl;
+    Twitter twitter;
+    Status status;
     TweetPostRequest tweetPostRequest;
     Logger logger= LoggerFactory.getLogger(SendTweetTest.class);
     @Before
     public void seTup()
     {
-            twConfiguration= Mockito.mock(TWConfiguration.class);
-            sendTweet=new SendTweet(twConfiguration);
+            twitterImpl= Mockito.mock(TwitterImpl.class);
+            twitter=Mockito.mock(Twitter.class);
+            status=Mockito.mock(Status.class);
+            sendTweet=new SendTweet(twitterImpl);
             tweetPostRequest=new TweetPostRequest();
     }
     @Test
-    public void testCase_sendTweet_successCase()
-    {
-        when(twConfiguration.configurationBuilder()).thenReturn(new ConfigurationBuilder());
+    public void testCase_sendTweet_successCase() throws TwitterException {
         tweetPostRequest.setMessage("Sad moment missing Home");
         String expectedTweet=tweetPostRequest.getMessage();
+        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
+        when(twitter.updateStatus(expectedTweet)).thenReturn(status);
+        when(status.getText()).thenReturn(expectedTweet);
         Status status=null;
         try {
              status=sendTweet.sendTweets(expectedTweet);
@@ -45,9 +51,7 @@ public class SendTweetTest {
         Assert.assertEquals(expectedTweet,actualTweet);
     }
     @Test
-    public void testCase_sendTweet_checkLength_successCase()
-    {
-        when(twConfiguration.configurationBuilder()).thenReturn(new ConfigurationBuilder());
+    public void testCase_sendTweet_checkLength_successCase() throws TwitterException {
         tweetPostRequest.setMessage("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -56,9 +60,10 @@ public class SendTweetTest {
         String expectedTweetNoNull=tweetPostRequest.getMessage();
         String actualTweet="";
         String expectedTweet="";
-            Status status = null;
+        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
+        when(twitter.updateStatus(expectedTweetNoNull)).thenReturn(null);
             try {
-                status = sendTweet.sendTweets(expectedTweet);
+                status = sendTweet.sendTweets(expectedTweetNoNull);
             } catch (TwitterException e) {
                  actualTweet=e.getMessage();
                  expectedTweet="Tweet needs to be a shorter";
@@ -74,12 +79,10 @@ public class SendTweetTest {
         }
     }
     @Test
-    public void testCase_NoTweetSend_successCase()
-    {
-        when(twConfiguration.configurationBuilder()).thenReturn(new ConfigurationBuilder());
+    public void testCase_NoTweetSend_successCase() throws TwitterException {
         tweetPostRequest.setMessage("");
         String expectedTweet=tweetPostRequest.getMessage();
-        Status status=null;
+        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
         try {
             status=sendTweet.sendTweets(expectedTweet);
         } catch (TwitterException e) {
@@ -104,19 +107,20 @@ public class SendTweetTest {
         Assert.assertEquals(expectedLength,actuallength);
     }
     @Test
-    public void testCase_sendReTweetedTweet_successCase()
-    {
-        when(twConfiguration.configurationBuilder()).thenReturn(new ConfigurationBuilder());
+    public void testCase_sendReTweetedTweet_successCase() throws TwitterException {
         tweetPostRequest.setMessage("Raj");
         String expectedTweet="Tweet is duplicate tweet";
         String actualTweet="";
-        Status status=null;
+        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
+        when(twitter.updateStatus(expectedTweet)).thenReturn(status);
+        when(status.getText()).thenReturn(expectedTweet);
         try {
-            status=sendTweet.sendTweets(tweetPostRequest.getMessage());
+            status=sendTweet.sendTweets(expectedTweet);
         } catch (TwitterException e) {
             actualTweet=e.getMessage();
             logger.error("Exception occur",e);
         }
+        actualTweet=status.getText();
         Assert.assertEquals(expectedTweet,actualTweet);
     }
 

@@ -1,6 +1,9 @@
 package com.resource;
 
 
+import com.service.RetrieveTweets;
+import com.service.SendTweet;
+import com.service.TwitterImpl;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,13 +19,14 @@ public class TwitterController {
     TweetPostRequest tweetPostRequest;
     SendTweet sendTweet;
     RetrieveTweets retrieveTweets;
+    TwitterImpl twitterimpl=new TwitterImpl();
     private Logger logger= LoggerFactory.getLogger(TwitterController.class);
-    public TwitterController(TweetPostRequest tweetPostRequest, SendTweet sendTweet,RetrieveTweets retrieveTweets) {
+    public TwitterController(TweetPostRequest tweetPostRequest, SendTweet sendTweet,RetrieveTweets retrieveTweets,TwitterImpl twitterimpl) {
         this.tweetPostRequest = tweetPostRequest;
         this.sendTweet = sendTweet;
         this.retrieveTweets=retrieveTweets;
+        this.twitterimpl=twitterimpl;
     }
-
     public TwitterController() {
     }
     @POST
@@ -39,7 +43,7 @@ public class TwitterController {
         {
             try
             {
-                SendTweet sendTweet = new SendTweet();
+                SendTweet sendTweet =tweetPostRequest.getSendTweetObject(twitterimpl);
                 Status  status= sendTweet.sendTweets(tweet);
                 if (status.getText().equals(tweet))
                 {
@@ -65,8 +69,8 @@ public class TwitterController {
 
     @GET
     @Path("/getTimeline")
-    public Response getTweets() {
-        RetrieveTweets retrieveTweets = new RetrieveTweets();
+    public Response getTweets(TweetPostRequest tweetPostRequest) {
+        RetrieveTweets retrieveTweets =tweetPostRequest.getRetrieveTweetsObject(twitterimpl);
         return retrieveTweets.fetchLatestTweet();
     }
 }

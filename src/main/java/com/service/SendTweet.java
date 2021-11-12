@@ -1,7 +1,5 @@
-package com.resource;
+package com.service;
 
-import com.config.TWConfiguration;
-import com.service.TwitterImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Status;
@@ -14,6 +12,9 @@ public class SendTweet {
     public SendTweet(TwitterImpl twitterimpl)
     {
         this.twitterimpl=twitterimpl;
+    }
+    public SendTweet(){
+
     }
     public  Status sendTweets(String args) throws TwitterException
     {

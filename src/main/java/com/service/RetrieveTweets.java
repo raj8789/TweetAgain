@@ -1,7 +1,5 @@
-package com.resource;
+package com.service;
 
-import com.config.TWConfiguration;
-import com.service.TwitterImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Status;
@@ -18,15 +16,16 @@ public class RetrieveTweets {
     {
             this.twitterimpl=twitterimpl;
     }
+    public RetrieveTweets()
+    {}
     public  Response fetchLatestTweet() {
 
         ArrayList<String> arrayList = new ArrayList<String>();
         try {
             Twitter twitter=twitterimpl.getTwitterObject();
             List<Status> statuses = twitter.getHomeTimeline();
-            for (int i=1;i<=statuses.size();i++)
-            {
-                arrayList.add(statuses.get(i).getText());
+            for (Status status : statuses) {
+                arrayList.add(status.getText());
             }
         } catch (TwitterException e) {
             logger.error("Error Occur",e);

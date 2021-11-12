@@ -1,9 +1,10 @@
 package test.java.com;
 
-import com.resource.RetrieveTweets;
-import com.resource.SendTweet;
+import com.service.RetrieveTweets;
+import com.service.SendTweet;
 import com.resource.TweetPostRequest;
 import com.resource.TwitterController;
+import com.service.TwitterImpl;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import twitter4j.Status;
 import twitter4j.TwitterException;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -24,37 +26,35 @@ public class TwitterControllerTest {
     SendTweet sendTweet;
     RetrieveTweets retrieveTweets;
     Logger logger= LoggerFactory.getLogger(TwitterControllerTest.class);
+    Status status;
+    TwitterImpl twitterimpl;
     @Before
     public void setUp()
     {
         tweetPostRequest= Mockito.mock(TweetPostRequest.class);
         sendTweet=Mockito.mock(SendTweet.class);
+        twitterimpl=Mockito.mock(TwitterImpl.class);
         retrieveTweets=Mockito.mock(RetrieveTweets.class);
-        twitterController=new TwitterController(tweetPostRequest,sendTweet,retrieveTweets);
+        status=Mockito.mock(Status.class);
+        twitterController=new TwitterController(tweetPostRequest,sendTweet,retrieveTweets,twitterimpl);
     }
     @Test
     public void testCase_tweeterController_sendTweet() throws TwitterException {
         when(tweetPostRequest.getMessage()).thenReturn("Sleep");
+        when(tweetPostRequest.getSendTweetObject(twitterimpl)).thenReturn(sendTweet);
+        when(sendTweet.sendTweets("Sleep")).thenReturn(status);
+        when(status.getText()).thenReturn("Sleep");
          Response responseActual= twitterController.sendTweet(tweetPostRequest);
          Response responseExpected= Response.ok("Sleep").build();
         Assert.assertEquals(responseExpected.getStatus(),responseActual.getStatus());
     }
     @Test
     public void testCase_tweeterControllerNull_sendTweet() throws TwitterException {
-        when(tweetPostRequest.getMessage()).thenReturn("Stay calm");
-        String response="Not Able To Tweet";
-        String actual="";
-        try
-        {
-            Response responseActual= twitterController.sendTweet(tweetPostRequest);
-        }
-        catch (NullPointerException e)
-        {
-            actual=e.getMessage();
-            logger.error("Exception occur",e);
-        }
-        Response responseExpected= Response.ok("Stay calm").build();
-        Assert.assertEquals(response,actual);
+        when(tweetPostRequest.getMessage()).thenReturn("");
+        Response responseActual= twitterController.sendTweet(tweetPostRequest);
+        Response responseExpected= Response.status(400).build();
+        Assert.assertEquals(responseExpected.getEntity(),responseActual.getEntity());
+
     }
 
     @Test
@@ -64,7 +64,8 @@ public class TwitterControllerTest {
         arrayList.add("tweet2");
         Response expectedResponse= Response.ok(arrayList).build();
         when(retrieveTweets.fetchLatestTweet()).thenReturn(expectedResponse);
-        Response actualResponse=twitterController.getTweets();
+        when(tweetPostRequest.getRetrieveTweetsObject(twitterimpl)).thenReturn(retrieveTweets);
+        Response actualResponse=twitterController.getTweets(tweetPostRequest);
         Assert.assertEquals(expectedResponse.getLength(),actualResponse.getLength());
     }
 }

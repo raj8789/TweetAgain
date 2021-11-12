@@ -27,7 +27,7 @@ class TwitterRunnerTest {
 
     @Test
     void main() {
-        String ar[]={"mrigu","biren"};
+        String ar[]={"server"};
         try {
             TwitterRunner.main(ar);
         }
