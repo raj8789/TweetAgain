@@ -1,30 +1,24 @@
 package com.resource;
 
 import com.config.TWConfiguration;
+import com.service.TwitterImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
 
 public class SendTweet {
-    TWConfiguration twConfiguration;
-    public SendTweet(TWConfiguration twConfiguration)
-    {
-        this.twConfiguration=twConfiguration;
-    }
-    public SendTweet()
-    {
-    }
-    public  Status sendTweets(String args) throws TwitterException {
 
+    TwitterImpl twitterimpl;
+    public SendTweet(TwitterImpl twitterimpl)
+    {
+        this.twitterimpl=twitterimpl;
+    }
+    public  Status sendTweets(String args) throws TwitterException
+    {
         Logger logger= LoggerFactory.getLogger(SendTweet.class);
-        TWConfiguration twConfiguration=new TWConfiguration();
-        ConfigurationBuilder configurationBuilder = twConfiguration.configurationBuilder();
-        TwitterFactory twitterFactory = new TwitterFactory(configurationBuilder.build());
-        Twitter twitter = twitterFactory.getInstance();
+        Twitter twitter=twitterimpl.getTwitterObject();
         Status status = null;
         try {
             if(args.length()!=0)

@@ -1,40 +1,33 @@
 package com.resource;
 
 import com.config.TWConfiguration;
+import com.service.TwitterImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RetrieveTweets {
-    TWConfiguration twConfiguration;
+    TwitterImpl twitterimpl;
     Logger logger= LoggerFactory.getLogger(RetrieveTweets.class);
-    public RetrieveTweets()
+    public RetrieveTweets(TwitterImpl twitterimpl)
     {
-
-    }
-    public RetrieveTweets(TWConfiguration twConfiguration)
-    {
-        this.twConfiguration=twConfiguration;
+            this.twitterimpl=twitterimpl;
     }
     public  Response fetchLatestTweet() {
-        TWConfiguration twConfiguration=new TWConfiguration();
-        ConfigurationBuilder configurationBuilder = twConfiguration.configurationBuilder();
+
         ArrayList<String> arrayList = new ArrayList<String>();
         try {
-            TwitterFactory twitterFactory = new TwitterFactory(configurationBuilder.build());
-            Twitter twitter = twitterFactory.getInstance();
+            Twitter twitter=twitterimpl.getTwitterObject();
             List<Status> statuses = twitter.getHomeTimeline();
-            for (Status status : statuses) {
-                arrayList.add(status.getText());
+            for (int i=1;i<=statuses.size();i++)
+            {
+                arrayList.add(statuses.get(i).getText());
             }
-
         } catch (TwitterException e) {
             logger.error("Error Occur",e);
         }
