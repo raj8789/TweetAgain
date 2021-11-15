@@ -56,7 +56,7 @@ public class RetrieveTweetsTest {
         when(responseList.get(3)).thenReturn(s3);
         when(s3.getText()).thenReturn("Tweet3");
         Response responseExpected= Response.ok(Arrays.asList("Tweet1","Tweet2","Tweet3")).build();
-        Response responseActual=retrieveTweets.fetchLatestTweet();
+        Response responseActual= Response.ok(retrieveTweets.fetchLatestTweet()).build();
         Assert.assertEquals(responseExpected.getLength(),responseActual.getLength());
     }
     @Test
@@ -67,7 +67,7 @@ public class RetrieveTweetsTest {
         when(twitterImpl.getTwitterObject()).thenReturn(twitter);
         when( twitter.getHomeTimeline()).thenReturn(responseList);
         Response responseExpected= Response.ok(responseList).build();
-        Response responseActual=retrieveTweets.fetchLatestTweet();
+        Response responseActual= Response.ok(retrieveTweets.fetchLatestTweet()).build();
         Assert.assertEquals(responseExpected.getLength(),responseActual.getLength());
 
     }

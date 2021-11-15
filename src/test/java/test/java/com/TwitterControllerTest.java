@@ -41,7 +41,7 @@ public class TwitterControllerTest {
     @Test
     public void testCase_tweeterController_sendTweet() throws TwitterException {
         when(tweetPostRequest.getMessage()).thenReturn("Sleep");
-        when(tweetPostRequest.getSendTweetObject(twitterimpl)).thenReturn(sendTweet);
+        when(twitterimpl.getSendTweetObject()).thenReturn(sendTweet);
         when(sendTweet.sendTweets("Sleep")).thenReturn(status);
         when(status.getText()).thenReturn("Sleep");
          Response responseActual= twitterController.sendTweet(tweetPostRequest);
@@ -63,9 +63,9 @@ public class TwitterControllerTest {
         arrayList.add("tweet1");
         arrayList.add("tweet2");
         Response expectedResponse= Response.ok(arrayList).build();
-        when(retrieveTweets.fetchLatestTweet()).thenReturn(expectedResponse);
-        when(tweetPostRequest.getRetrieveTweetsObject(twitterimpl)).thenReturn(retrieveTweets);
-        Response actualResponse=twitterController.getTweets(tweetPostRequest);
+        when(retrieveTweets.fetchLatestTweet()).thenReturn(arrayList);
+        when(twitterimpl.getRetrieveTweetsObject()).thenReturn(retrieveTweets);
+        Response actualResponse=twitterController.getTweets();
         Assert.assertEquals(expectedResponse.getLength(),actualResponse.getLength());
     }
 }

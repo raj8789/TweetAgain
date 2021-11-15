@@ -19,7 +19,7 @@ public class TwitterController {
     TweetPostRequest tweetPostRequest;
     SendTweet sendTweet;
     RetrieveTweets retrieveTweets;
-    TwitterImpl twitterimpl=new TwitterImpl();
+    TwitterImpl twitterimpl;
     private Logger logger= LoggerFactory.getLogger(TwitterController.class);
     public TwitterController(TweetPostRequest tweetPostRequest, SendTweet sendTweet,RetrieveTweets retrieveTweets,TwitterImpl twitterimpl) {
         this.tweetPostRequest = tweetPostRequest;
@@ -27,7 +27,9 @@ public class TwitterController {
         this.retrieveTweets=retrieveTweets;
         this.twitterimpl=twitterimpl;
     }
-    public TwitterController() {
+    public TwitterController()
+    {
+        twitterimpl=new TwitterImpl();
     }
     @POST
     @Path("/postTweet")
@@ -43,7 +45,7 @@ public class TwitterController {
         {
             try
             {
-                SendTweet sendTweet =tweetPostRequest.getSendTweetObject(twitterimpl);
+                SendTweet sendTweet =twitterimpl.getSendTweetObject();
                 Status  status= sendTweet.sendTweets(tweet);
                 if (status.getText().equals(tweet))
                 {
@@ -69,8 +71,8 @@ public class TwitterController {
 
     @GET
     @Path("/getTimeline")
-    public Response getTweets(TweetPostRequest tweetPostRequest) {
-        RetrieveTweets retrieveTweets =tweetPostRequest.getRetrieveTweetsObject(twitterimpl);
-        return retrieveTweets.fetchLatestTweet();
+    public Response getTweets() {
+        RetrieveTweets retrieveTweets =twitterimpl.getRetrieveTweetsObject();
+        return Response.ok(retrieveTweets.fetchLatestTweet()).build();
     }
 }
