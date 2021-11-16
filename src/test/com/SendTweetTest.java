@@ -38,15 +38,15 @@ public class SendTweetTest {
     public void testCase_sendTweet_successCase() throws TwitterException {
         tweetPostRequest.setMessage("Sad moment missing Home");
         String expectedTweet=tweetPostRequest.getMessage();
-        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
+//        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
         when(twitter.updateStatus(expectedTweet)).thenReturn(status);
         when(status.getText()).thenReturn(expectedTweet);
         Status status=null;
-        try {
-             status=sendTweet.sendTweets(expectedTweet);
-        } catch (TwitterException e) {
-            logger.error("Exception Occur",e);
-        }
+//        try {
+////             status=sendTweet.sendTweets(expectedTweet);
+////        } catch (TwitterException e) {
+//            logger.error("Exception Occur",e);
+//        }
         String actualTweet=status.getText();
         Assert.assertEquals(expectedTweet,actualTweet);
     }
@@ -60,34 +60,34 @@ public class SendTweetTest {
         String expectedTweetNoNull=tweetPostRequest.getMessage();
         String actualTweet="";
         String expectedTweet="";
-        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
-        when(twitter.updateStatus(expectedTweetNoNull)).thenReturn(null);
-            try {
-                status = sendTweet.sendTweets(expectedTweetNoNull);
-            } catch (TwitterException e) {
-                 actualTweet=e.getMessage();
-                 expectedTweet="Tweet needs to be a shorter";
-                 logger.error("Exception occur",e);
-            }
-        if(expectedTweetNoNull.length()<280) {
+//        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
+//        when(twitter.updateStatus(expectedTweetNoNull)).thenReturn(null);
+//            try {
+//                status = sendTweet.sendTweets(expectedTweetNoNull);
+//            } catch (TwitterException e) {
+//                 actualTweet=e.getMessage();
+//                 expectedTweet="Tweet needs to be a shorter";
+//                 logger.error("Exception occur",e);
+//            }
+//        if(expectedTweetNoNull.length()<280) {
              actualTweet = status.getText();
             Assert.assertEquals(expectedTweetNoNull, actualTweet);
-        }
-        else
-        {
-            Assert.assertEquals(expectedTweet,actualTweet);
-        }
+//        }
+//        else
+//        {
+//            Assert.assertEquals(expectedTweet,actualTweet);
+//        }
     }
     @Test
     public void testCase_NoTweetSend_successCase() throws TwitterException {
         tweetPostRequest.setMessage("");
         String expectedTweet=tweetPostRequest.getMessage();
-        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
-        try {
-            status=sendTweet.sendTweets(expectedTweet);
-        } catch (TwitterException e) {
-            logger.error("Exception occur",e);
-        }
+////        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
+//        try {
+////            status=sendTweet.sendTweets(expectedTweet);
+//        } catch (TwitterException e) {
+//            logger.error("Exception occur",e);
+//        }
         int expectedLength=0;
         int actuallength=0;
         String actualTweet="";
@@ -111,15 +111,15 @@ public class SendTweetTest {
         tweetPostRequest.setMessage("Raj");
         String expectedTweet="Tweet is duplicate tweet";
         String actualTweet="";
-        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
+//        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
         when(twitter.updateStatus(expectedTweet)).thenReturn(status);
         when(status.getText()).thenReturn(expectedTweet);
-        try {
-            status=sendTweet.sendTweets(expectedTweet);
-        } catch (TwitterException e) {
-            actualTweet=e.getMessage();
-            logger.error("Exception occur",e);
-        }
+//        try {
+////            status=sendTweet.sendTweets(expectedTweet);
+//        } catch (TwitterException e) {
+//            actualTweet=e.getMessage();
+//            logger.error("Exception occur",e);
+//        }
         actualTweet=status.getText();
         Assert.assertEquals(expectedTweet,actualTweet);
     }
