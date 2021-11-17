@@ -1,89 +1,81 @@
 package com;
 
-import com.config.TWConfiguration;
-import com.resource.TweetPostRequest;
 import com.service.TwitterImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.slf4j.LoggerFactory;
 import twitter4j.*;
-import twitter4j.conf.ConfigurationBuilder;
-import javax.ws.rs.core.Response;
+
+import javax.ws.rs.InternalServerErrorException;
 import java.util.Arrays;
-import static org.mockito.Mockito.*;
+import java.util.List;
+
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TwitterImplTest {
-    TWConfiguration twConfiguration;
-    ConfigurationBuilder configurationBuilder;
     TwitterFactory twitterFactory;
     TwitterImpl twitterImpl;
     Twitter twitter;
-    Status status;
-    org.slf4j.Logger logger = LoggerFactory.getLogger(TwitterImplTest.class);
+
     @Before
     public void setUp() {
-        // mocking is pending
-        twConfiguration = Mockito.mock(TWConfiguration.class);
-        configurationBuilder = Mockito.mock(ConfigurationBuilder.class);
-        twitterFactory = Mockito.mock(TwitterFactory.class);
-        twitter =Mockito.mock(Twitter.class);
-        twitterImpl=Mockito.mock(TwitterImpl.class);
-        status=Mockito.mock(Status.class);
-        new TwitterImpl(twConfiguration, configurationBuilder, twitterFactory,twitter,twitterImpl,status);
+        twitterFactory = mock(TwitterFactory.class);
+        twitter = mock(Twitter.class);
+        when(twitterFactory.getInstance()).thenReturn(twitter);
+        twitterImpl = new TwitterImpl(twitterFactory);
     }
 
     @Test
     public void testCase_fetchTweet_successCase() throws TwitterException {
-        ResponseList<Status> responseList=Mockito.mock(ResponseList.class);
-        Status s1=Mockito.mock(Status.class);
-        Status s2=Mockito.mock(Status.class);
-        Status s3=Mockito.mock(Status.class);
-        responseList.add(s1);
-        responseList.add(s2);
-        responseList.add(s3);
-        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
-        when( twitter.getHomeTimeline()).thenReturn(responseList);
+        ResponseList<Status> responseList = mock(ResponseList.class);
+        Status s1 = mock(Status.class);
+        Status s2 = mock(Status.class);
+        Status s3 = mock(Status.class);
         when(responseList.size()).thenReturn(3);
-        when(responseList.get(1)).thenReturn(s1);
+        when(responseList.get(0)).thenReturn(s1);
         when(s1.getText()).thenReturn("Tweet1");
-        when(responseList.get(2)).thenReturn(s2);
+        when(responseList.get(1)).thenReturn(s2);
         when(s2.getText()).thenReturn("Tweet2");
-        when(responseList.get(3)).thenReturn(s3);
+        when(responseList.get(2)).thenReturn(s3);
         when(s3.getText()).thenReturn("Tweet3");
-        Response responseExpected= Response.ok(Arrays.asList("Tweet1","Tweet2","Tweet3")).build();
-        Response responseActual = Response.ok(twitterImpl.fetchLatestTweet()).build();
-       Assert.assertEquals(responseExpected.getLength(),responseActual.getLength());
+
+        when(twitter.getHomeTimeline()).thenReturn(responseList);
+
+        List<String> expected = Arrays.asList("Tweet1", "Tweet2", "Tweet3");
+
+        List<String> actual = twitterImpl.fetchLatestTweet();
+
+        Assert.assertEquals(expected, actual);
     }
-   @Test
+
+    @Test
     public void testCase_fetchNoTweetOnTimeline_successCase() throws TwitterException {
-       ResponseList<Status> responseList=Mockito.mock(ResponseList.class);
-        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
-        responseList.add(null);
+        ResponseList<Status> responseList = mock(ResponseList.class);
         when(responseList.size()).thenReturn(0);
-        when(twitterImpl.getTwitterObject()).thenReturn(twitter);
-        when( twitter.getHomeTimeline()).thenReturn(responseList);
-        Response responseExpected= Response.ok(responseList).build();
-        Response responseActual= Response.ok(twitterImpl.fetchLatestTweet()).build();
-        Assert.assertEquals(responseExpected.getLength(),responseActual.getLength());
+        when(twitter.getHomeTimeline()).thenReturn(responseList);
+
+        List<String> actual = twitterImpl.fetchLatestTweet();
+        Assert.assertEquals(Arrays.asList(), actual);
     }
-   @Test
-   public void testCase_sendTweet_successCase() throws TwitterException {
-       String expectedTweet = "Error";
-       when(twitterImpl.getTwitterObject()).thenReturn(twitter);
-       when(twitter.updateStatus(expectedTweet)).thenReturn(status);
-       when(status.getText()).thenReturn(expectedTweet);
-       try {
-           status = twitterImpl.sendTweets(expectedTweet);
-       } catch (TwitterException e) {
-           logger.error("Exception Occur", e);
-       }
-       String actualTweet = status.getText();
-            Assert.assertEquals(expectedTweet,actualTweet);
-        }
-   }
+
+    @Test(expected = InternalServerErrorException.class)
+    public void testCase_exceptionCase() throws TwitterException {
+        when(twitter.getHomeTimeline()).thenThrow(TwitterException.class);
+        twitterImpl.fetchLatestTweet();
+    }
+
+    @Test
+    public void testCase_sendTweet_successCase() throws TwitterException {
+        Status expected = mock(Status.class);
+        String tweet = "My Tweet";
+        when(twitter.updateStatus(tweet)).thenReturn(expected);
+        Status actual = twitterImpl.sendTweets(tweet);
+        Assert.assertEquals(expected, actual);
+    }
+
+    // 2 more cases 1. greater than 280, 2. empty tweet
+}

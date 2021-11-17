@@ -13,24 +13,25 @@ import twitter4j.TwitterException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/api/1.0/twitter")
 public class TwitterController {
 
-    TweetPostRequest tweetPostRequest;
-    SendTweet sendTweet;
-    RetrieveTweets retrieveTweets;
-    TwitterImpl twitterimpl;
     private final Logger logger = LoggerFactory.getLogger(TwitterController.class);
-    public TwitterController(TweetPostRequest tweetPostRequest,  TwitterImpl twitterimpl) {
-        this.tweetPostRequest = tweetPostRequest;
+    TweetPostRequest tweetPostRequest;
+    TwitterImpl twitterimpl;
 
+    // used by test class
+    public TwitterController(TwitterImpl twitterimpl) {
         this.twitterimpl = twitterimpl;
     }
+
     public TwitterController() {
-        twitterimpl=new TwitterImpl();
+        twitterimpl = new TwitterImpl();
     }
+
     @POST
     @Path("/postTweet")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -49,18 +50,26 @@ public class TwitterController {
                     logger.error("Tweet Was Not Done Invalid Request");
                     return Response.status(500, "Request was not completed").build();
                 }
-            } catch (TwitterException e) {
-                logger.error("Tweet Was Not Done Invalid Request");
+            } catch (BadRequestException e) {
+                logger.error("Tweet Was Not Done Invalid Request", e);
+                return Response.status(400, "Request tweet is not correct").build();
+            } catch (Exception e) {
+                logger.error("Tweet Was Not Sent");
                 return Response.status(500, "Request Was Not Completed").build();
-            } catch (NullPointerException e) {
-                logger.error("Status Was Not found so Not Able to tweet");
-                throw new NullPointerException("Not Able To Tweet");
             }
         }
     }
+
     @GET
     @Path("/getTimeline")
     public Response getTweets() {
-        return Response.ok(twitterimpl.fetchLatestTweet()).build();
+        List<String> tweets;
+        try {
+            tweets = twitterimpl.fetchLatestTweet();
+        } catch (Exception e) {
+            logger.error("Tweet could not be fetched");
+            return Response.status(500, "Request Was Not Completed").build();
+        }
+        return Response.ok(tweets).build();
     }
 }

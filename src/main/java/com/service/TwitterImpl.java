@@ -9,6 +9,8 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.InternalServerErrorException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,62 +20,52 @@ public class TwitterImpl {
     TwitterFactory twitterFactory;
     Logger logger = LoggerFactory.getLogger(TwitterImpl.class);
     Twitter twitter;
-    TwitterImpl twitterImpl;
-    Status status;
-    public  TwitterImpl(){
+
+    // controller usage
+    public TwitterImpl() {
+        twConfiguration = new TWConfiguration();
+        configurationBuilder = twConfiguration.configurationBuilder();
+        twitterFactory = new TwitterFactory(configurationBuilder.build());
+        twitter = twitterFactory.getInstance();
     }
-    public TwitterImpl(TWConfiguration twConfiguration, ConfigurationBuilder configurationBuilder, TwitterFactory twitterFactory,Twitter twitter,TwitterImpl twitterImpl,Status status) {
-        this.twConfiguration = twConfiguration;
-        this.configurationBuilder = configurationBuilder;
+
+    // used for test case
+    public TwitterImpl(TwitterFactory twitterFactory) {
         this.twitterFactory = twitterFactory;
-        this.twitter=twitter;
-        this.twitterImpl=twitterImpl;
-        this.status=status;
+        this.twitter = twitterFactory.getInstance();
     }
-    public Status sendTweets(String args) throws TwitterException {
-         status = null;
+
+    public Status sendTweets(String tweet) {
+        int tweetLength = tweet.length();
+        if (tweetLength > 280 || tweetLength == 0) {
+            logger.error("Tweet can should be between 0 to 280");
+            throw new BadRequestException("Tweet can should be between 0 to 280");
+        }
+        Status status;
         try {
-            if (args.length() != 0) {
-                twitter = this.getTwitterObject();
-                status = twitter.updateStatus(args);
-            }
-            else
-                status = null;
-        } catch (Exception e) {
-            if (args.length() > 280) {
-                logger.error("Tweets Length Is to Long Need to be shorter");
-                throw new TwitterException("Tweet needs to be a shorter");
-            }
-            if (status == null) {
-                logger.error("Tweets is Duplicated");
-                throw new TwitterException("Tweet is duplicate tweet");
-            }
+            status = twitter.updateStatus(tweet);
+        } catch (TwitterException e) {
+            logger.error("Exception while send tweet", e);
+            throw new InternalServerErrorException("Server error, could not post tweet");
         }
         return status;
     }
+
     public ArrayList<String> fetchLatestTweet() {
         ArrayList<String> arrayList = new ArrayList<>();
         try {
-            twitter=this.getTwitterObject();
             List<Status> statuses = twitter.getHomeTimeline();
-            for(int i=0;i<statuses.size();i++)
-            {
-                Status s=statuses.get(i);
+            for (int i = 0; i < statuses.size(); i++) {
+                Status s = statuses.get(i);
                 arrayList.add(s.getText());
             }
         } catch (TwitterException e) {
             logger.error("Error Occur", e);
+            throw new InternalServerErrorException("Server error, could not fetch tweet");
         }
         if (arrayList.isEmpty()) {
             logger.info("You Have No Tweets On your Timeline");
-            arrayList.add("No Tweet Found On TimeLine");
         }
         return arrayList;
-    }
-    public Twitter getTwitterObject() {
-         twConfiguration=new TWConfiguration();
-         configurationBuilder = twConfiguration.configurationBuilder();
-         twitterFactory = new TwitterFactory(configurationBuilder.build());
-        return twitterFactory.getInstance();
     }
 }

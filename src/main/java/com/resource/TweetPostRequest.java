@@ -1,11 +1,18 @@
 package com.resource;
+
 import com.service.TwitterImpl;
 
 public class TweetPostRequest {
     String message;
-    TwitterImpl twitterImpl;
-    public TweetPostRequest()
-    {}
+
+    public TweetPostRequest() {
+
+    }
+
+    public TweetPostRequest(String message) {
+        this.message = message;
+    }
+
     public String getMessage() {
         return message;
     }
