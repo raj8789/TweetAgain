@@ -20,7 +20,6 @@ import java.util.List;
 public class TwitterController {
 
     private final Logger logger = LoggerFactory.getLogger(TwitterController.class);
-    TweetPostRequest tweetPostRequest;
     TwitterImpl twitterimpl;
 
     // used by test class
