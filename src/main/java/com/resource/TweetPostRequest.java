@@ -1,7 +1,5 @@
 package com.resource;
 
-import com.service.TwitterImpl;
-
 public class TweetPostRequest {
     String message;
 

@@ -1,14 +1,11 @@
 package com.resource;
 
 
-import com.service.RetrieveTweets;
-import com.service.SendTweet;
 import com.service.TwitterImpl;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Status;
-import twitter4j.TwitterException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

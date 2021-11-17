@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import twitter4j.*;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
 import java.util.Arrays;
 import java.util.List;
@@ -77,5 +78,19 @@ public class TwitterImplTest {
         Assert.assertEquals(expected, actual);
     }
 
-    // 2 more cases 1. greater than 280, 2. empty tweet
+    @Test(expected = BadRequestException.class)
+    public void testCase_SendTweetFailCaseLongLengthTweet() {
+        String tweet = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\" +\n" +
+                "                \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"+\n" +
+                "                \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"+\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n" +
+                "        +\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"+\n" +
+                "                \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"+\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        twitterImpl.sendTweets(tweet);
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void testCase_SendTweetFailCaseZeroLengthTweet() {
+        String tweet = "";
+        twitterImpl.sendTweets(tweet);
+    }
 }

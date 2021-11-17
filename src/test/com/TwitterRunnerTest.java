@@ -16,37 +16,34 @@ class TwitterRunnerTest {
     TWConfiguration twConfiguration;
     Environment environment;
     TwitterController twitterController;
-    Logger logger= LoggerFactory.getLogger(TwitterRunnerTest.class);
+    Logger logger = LoggerFactory.getLogger(TwitterRunnerTest.class);
+
     @BeforeEach
     void setUp() {
-        twConfiguration= Mockito.mock(TWConfiguration.class);
-        environment= Mockito.mock(Environment.class);
-        twitterRunner=new TwitterRunner(twConfiguration,environment);
-        twitterController=Mockito.mock(TwitterController.class);
+        twConfiguration = Mockito.mock(TWConfiguration.class);
+        environment = Mockito.mock(Environment.class);
+        twitterRunner = new TwitterRunner(twConfiguration, environment);
+        twitterController = Mockito.mock(TwitterController.class);
     }
 
     @Test
     void main() {
-        String ar[]={"server"};
+        String[] ar = {"server"};
         try {
             TwitterRunner.main(ar);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.getMessage();
-            logger.error("Exception occur",e);
+            logger.error("Exception occur", e);
         }
     }
 
     @Test
     void run() {
         try {
-            twitterRunner.run(twConfiguration,environment);
-        }
-        catch (Exception e)
-        {
+            twitterRunner.run(twConfiguration, environment);
+        } catch (Exception e) {
             e.getMessage();
-            logger.error("Exception occur",e);
+            logger.error("Exception occur", e);
         }
 
         Assert.assertTrue(true);
