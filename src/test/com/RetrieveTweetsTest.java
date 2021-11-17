@@ -1,4 +1,4 @@
-package test.java.com;
+package com;
 
 import com.service.RetrieveTweets;
 import com.service.TwitterImpl;

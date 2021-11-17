@@ -22,20 +22,15 @@ public class TwitterController {
     SendTweet sendTweet;
     RetrieveTweets retrieveTweets;
     TwitterImpl twitterimpl;
-
     private final Logger logger = LoggerFactory.getLogger(TwitterController.class);
-
-    public TwitterController(TweetPostRequest tweetPostRequest, SendTweet sendTweet, RetrieveTweets retrieveTweets, TwitterImpl twitterimpl) {
+    public TwitterController(TweetPostRequest tweetPostRequest,  TwitterImpl twitterimpl) {
         this.tweetPostRequest = tweetPostRequest;
-        this.sendTweet = sendTweet;
-        this.retrieveTweets = retrieveTweets;
+
         this.twitterimpl = twitterimpl;
     }
-
     public TwitterController() {
-
+        twitterimpl=new TwitterImpl();
     }
-
     @POST
     @Path("/postTweet")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -63,7 +58,6 @@ public class TwitterController {
             }
         }
     }
-
     @GET
     @Path("/getTimeline")
     public Response getTweets() {

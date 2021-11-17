@@ -1,4 +1,4 @@
-package test.java.com;
+package com;
 
 import com.service.RetrieveTweets;
 import com.service.SendTweet;
@@ -23,8 +23,6 @@ import static org.mockito.Mockito.when;
 public class TwitterControllerTest {
     TwitterController twitterController;
     TweetPostRequest tweetPostRequest;
-    SendTweet sendTweet;
-    RetrieveTweets retrieveTweets;
     Logger logger= LoggerFactory.getLogger(TwitterControllerTest.class);
     Status status;
     TwitterImpl twitterimpl;
@@ -32,17 +30,14 @@ public class TwitterControllerTest {
     public void setUp()
     {
         tweetPostRequest= Mockito.mock(TweetPostRequest.class);
-        sendTweet=Mockito.mock(SendTweet.class);
         twitterimpl=Mockito.mock(TwitterImpl.class);
-        retrieveTweets=Mockito.mock(RetrieveTweets.class);
         status=Mockito.mock(Status.class);
-        twitterController=new TwitterController(tweetPostRequest,sendTweet,retrieveTweets,twitterimpl);
+        twitterController=new TwitterController(tweetPostRequest,twitterimpl);
     }
     @Test
     public void testCase_tweeterController_sendTweet() throws TwitterException {
         when(tweetPostRequest.getMessage()).thenReturn("Sleep");
-//        when(twitterimpl.getSendTweetObject()).thenReturn(sendTweet);
-//        when(sendTweet.sendTweets("Sleep")).thenReturn(status);
+        when(twitterimpl.sendTweets("Sleep")).thenReturn(status);
         when(status.getText()).thenReturn("Sleep");
          Response responseActual= twitterController.sendTweet(tweetPostRequest);
          Response responseExpected= Response.ok("Sleep").build();
@@ -54,7 +49,6 @@ public class TwitterControllerTest {
         Response responseActual= twitterController.sendTweet(tweetPostRequest);
         Response responseExpected= Response.status(400).build();
         Assert.assertEquals(responseExpected.getEntity(),responseActual.getEntity());
-
     }
 
     @Test
@@ -63,8 +57,7 @@ public class TwitterControllerTest {
         arrayList.add("tweet1");
         arrayList.add("tweet2");
         Response expectedResponse= Response.ok(arrayList).build();
-//        when(retrieveTweets.fetchLatestTweet()).thenReturn(arrayList);
-//        when(twitterimpl.getRetrieveTweetsObject()).thenReturn(retrieveTweets);
+        when(twitterimpl.fetchLatestTweet()).thenReturn(arrayList);
         Response actualResponse=twitterController.getTweets();
         Assert.assertEquals(expectedResponse.getLength(),actualResponse.getLength());
     }

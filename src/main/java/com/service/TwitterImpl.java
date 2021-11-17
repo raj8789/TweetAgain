@@ -18,19 +18,25 @@ public class TwitterImpl {
     TwitterFactory twitterFactory;
     Logger logger = LoggerFactory.getLogger(TwitterImpl.class);
     Twitter twitter;
-
-    public TwitterImpl(TWConfiguration twConfiguration, ConfigurationBuilder configurationBuilder, TwitterFactory twitterFactory) {
+    TwitterImpl twitterImpl;
+    Status status;
+    public  TwitterImpl(){
+    }
+    public TwitterImpl(TWConfiguration twConfiguration, ConfigurationBuilder configurationBuilder, TwitterFactory twitterFactory,Twitter twitter,TwitterImpl twitterImpl,Status status) {
         this.twConfiguration = twConfiguration;
         this.configurationBuilder = configurationBuilder;
         this.twitterFactory = twitterFactory;
-        twitter = twitterFactory.getInstance();
+        this.twitter=twitter;
+        this.twitterImpl=twitterImpl;
+        this.status=status;
     }
-
     public Status sendTweets(String args) throws TwitterException {
-        Status status = null;
+         status = null;
         try {
-            if (args.length() != 0)
+            if (args.length() != 0) {
+                twitter = this.getTwitterObject();
                 status = twitter.updateStatus(args);
+            }
             else
                 status = null;
         } catch (Exception e) {
@@ -45,13 +51,15 @@ public class TwitterImpl {
         }
         return status;
     }
-
     public ArrayList<String> fetchLatestTweet() {
         ArrayList<String> arrayList = new ArrayList<>();
         try {
+            twitter=this.getTwitterObject();
             List<Status> statuses = twitter.getHomeTimeline();
-            for (Status status : statuses) {
-                arrayList.add(status.getText());
+            for(int i=0;i<statuses.size();i++)
+            {
+                Status s=statuses.get(i);
+                arrayList.add(s.getText());
             }
         } catch (TwitterException e) {
             logger.error("Error Occur", e);
@@ -61,5 +69,11 @@ public class TwitterImpl {
             arrayList.add("No Tweet Found On TimeLine");
         }
         return arrayList;
+    }
+    public Twitter getTwitterObject() {
+         twConfiguration=new TWConfiguration();
+         configurationBuilder = twConfiguration.configurationBuilder();
+         twitterFactory = new TwitterFactory(configurationBuilder.build());
+        return twitterFactory.getInstance();
     }
 }
