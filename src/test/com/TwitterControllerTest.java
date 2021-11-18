@@ -88,7 +88,7 @@ public class TwitterControllerTest {
         arrayList.add("tweet1");
         arrayList.add("tweet2");
         Response expectedResponse = Response.ok(arrayList).build();
-        when(twitterimpl.fetchLatestTweet()).thenReturn(arrayList);
+       // when(twitterimpl.fetchLatestTweet()).thenReturn(arrayList);
         Response actualResponse = twitterController.getTweets();
         Assertions.assertThat(actualResponse).isEqualToComparingFieldByFieldRecursively(expectedResponse);
     }

@@ -1,33 +1,37 @@
 package com.model;
-import java.util.ArrayList;
 public class User {
     String twitterHandle;
     String name;
     String profileImageUrl;
-    String screenName;
-    String createdAt;
 
-    ArrayList<String> tweets =new ArrayList<>();
+    public User(String twitterHandle, String name, String profileImageUrl) {
+        this.twitterHandle = twitterHandle;
+        this.name = name;
+        this.profileImageUrl = profileImageUrl;
+    }
 
-    public String getScreenName() {
-        return screenName;
+    public String getTwitterHandle() {
+        return twitterHandle;
     }
-    public void setScreenName(String screenName) {
-        this.screenName = screenName;
+
+    public void setTwitterHandle(String twitterHandle) {
+        this.twitterHandle = twitterHandle;
     }
-    public User(){
-    }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getProfileImageUrl() {
         return profileImageUrl;
     }
+
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
     }
-}
 
+}

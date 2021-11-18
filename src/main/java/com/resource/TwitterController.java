@@ -7,11 +7,10 @@ import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Status;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
+import java.util.ArrayList;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/api/1.0/twitter")
@@ -60,13 +59,13 @@ public class TwitterController {
     @GET
     @Path("/getTimeline")
     public Response getTweets() {
-        List<String> tweets;
+        ArrayList<TwitterResponse> tweets;
         try {
-            tweets = twitterimpl.fetchLatestTweet();
+            //tweets = twitterimpl.fetchLatestTweet();
         } catch (Exception e) {
             logger.error("Tweet could not be fetched");
             return Response.status(500, "Request Was Not Completed").build();
         }
-        return Response.ok(tweets).build();
+        return Response.ok(twitterimpl.fetchLatestTweet()).build();
     }
 }
