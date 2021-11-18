@@ -1,4 +1,3 @@
-package com;
 
 import com.resource.TweetPostRequest;
 import com.resource.TwitterController;
@@ -15,6 +14,7 @@ import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -84,7 +84,7 @@ public class TwitterControllerTest {
 
     @Test
     public void testCase_tweeterController_getTweets() {
-        ArrayList<String> arrayList = new ArrayList<>();
+        List<String> arrayList = new ArrayList<>();
         arrayList.add("tweet1");
         arrayList.add("tweet2");
         Response expectedResponse = Response.ok(arrayList).build();

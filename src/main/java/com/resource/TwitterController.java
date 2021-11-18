@@ -1,6 +1,7 @@
 package com.resource;
 
 
+import com.model.TwitterResponse;
 import com.service.TwitterImpl;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;

@@ -60,12 +60,14 @@ public class TwitterImpl {
         List<String> twitterHandle;
         try {
             List<Status> statuses = twitter.getHomeTimeline();
-            user.setName("User Name  : "+statuses.get(0).getUser().getName());
-            user.setProfileImageUrl("Profile Image Url : "+statuses.get(0).getUser().getProfileImageURL());
+            user.setName(statuses.get(0).getUser().getName());
+            user.setProfileImageUrl(statuses.get(0).getUser().getProfileImageURL());
+            user.setScreenName(statuses.get(0).getUser().getScreenName());
             for (int i = 0; i < statuses.size(); i++) {
                 Status s = statuses.get(i);
                 //arrayList.add(s.getText());
-                user.setTwitterHandle(s.getText()+"      Date "+s.getCreatedAt());
+                twitterResponse.setTweet(s.getText());
+                twitterResponse.setCreatedAt(String.valueOf(s.getCreatedAt()));
             }
             twitterHandle=twitterResponse.getTwitterResponseList();
         } catch (TwitterException e) {

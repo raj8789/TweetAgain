@@ -4,7 +4,17 @@ public class User {
     String twitterHandle;
     String name;
     String profileImageUrl;
-    ArrayList<String> twitterHandles=new ArrayList<>();
+    String screenName;
+    String createdAt;
+
+    ArrayList<String> tweets =new ArrayList<>();
+
+    public String getScreenName() {
+        return screenName;
+    }
+    public void setScreenName(String screenName) {
+        this.screenName = screenName;
+    }
     public User(){
     }
     public String getName() {
@@ -18,13 +28,6 @@ public class User {
     }
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
-    }
-    public ArrayList<String> getTwitterHandles() {
-        return twitterHandles;
-    }
-    public void setTwitterHandle(String twitterHandle) {
-        this.twitterHandle = twitterHandle;
-        twitterHandles.add(twitterHandle);
     }
 }
 

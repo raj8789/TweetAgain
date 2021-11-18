@@ -1,4 +1,4 @@
-package test.java.com;
+
 
 import com.config.TWConfiguration;
 import com.resource.TwitterController;

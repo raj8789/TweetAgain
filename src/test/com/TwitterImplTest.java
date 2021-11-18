@@ -1,4 +1,3 @@
-package com;
 
 import com.service.TwitterImpl;
 import org.junit.Assert;
