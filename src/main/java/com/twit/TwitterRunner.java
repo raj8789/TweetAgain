@@ -1,6 +1,5 @@
 package com.twit;
 
-
 import com.config.TWConfiguration;
 import com.resource.TwitterController;
 import io.dropwizard.Application;
