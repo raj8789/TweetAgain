@@ -1,4 +1,3 @@
-package test.java.com;
 
 import com.config.TWConfiguration;
 import com.resource.TwitterController;
@@ -17,7 +16,6 @@ class TwitterRunnerTest {
     Environment environment;
     TwitterController twitterController;
     Logger logger = LoggerFactory.getLogger(TwitterRunnerTest.class);
-
     @BeforeEach
     void setUp() {
         twConfiguration = Mockito.mock(TWConfiguration.class);
@@ -25,7 +23,6 @@ class TwitterRunnerTest {
         twitterRunner = new TwitterRunner(twConfiguration, environment);
         twitterController = Mockito.mock(TwitterController.class);
     }
-
     @Test
     void main() {
         String[] ar = {"server"};
@@ -36,7 +33,6 @@ class TwitterRunnerTest {
             logger.error("Exception occur", e);
         }
     }
-
     @Test
     void run() {
         try {

@@ -1,17 +1,19 @@
 package com.service;
 
 import com.config.TWConfiguration;
+import com.model.TwitterResponse;
+import com.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
+import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TwitterImpl {
@@ -21,6 +23,8 @@ public class TwitterImpl {
     Logger logger = LoggerFactory.getLogger(TwitterImpl.class);
     Twitter twitter;
 
+
+    TwitterResponse twitterResponse;
     // controller usage
     public TwitterImpl() {
         twConfiguration = new TWConfiguration();
@@ -50,22 +54,37 @@ public class TwitterImpl {
         }
         return status;
     }
-
-    public ArrayList<String> fetchLatestTweet() {
-        ArrayList<String> arrayList = new ArrayList<>();
-        try {
+    public ArrayList<TwitterResponse> fetchLatestTweet()
+    {
+        String twitterHandle;
+        String name;
+        String message;
+        String profileImageUrl;
+        Date created = null;
+        ArrayList<TwitterResponse> twitList=new ArrayList<>();
+        try
+        {
             List<Status> statuses = twitter.getHomeTimeline();
             for (int i = 0; i < statuses.size(); i++) {
                 Status s = statuses.get(i);
-                arrayList.add(s.getText());
+                profileImageUrl = s.getUser().getProfileImageURL();
+                name = s.getUser().getName();
+                twitterHandle =s.getUser().getScreenName();
+                message = s.getText();
+                created = s.getCreatedAt();
+                Format dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                String date = dateFormat.format(created);
+                twitterResponse= new TwitterResponse(message,twitterHandle,name,profileImageUrl,date);
+                twitterResponse.setCreatedAt(date);
+                twitList.add(twitterResponse);
             }
         } catch (TwitterException e) {
             logger.error("Error Occur", e);
             throw new InternalServerErrorException("Server error, could not fetch tweet");
         }
-        if (arrayList.isEmpty()) {
+        if (twitList.isEmpty()) {
             logger.info("You Have No Tweets On your Timeline");
         }
-        return arrayList;
+        return twitList;
     }
 }
