@@ -12,6 +12,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.List;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/api/1.0/twitter")
@@ -28,7 +29,6 @@ public class TwitterController {
     public TwitterController() {
         twitterimpl = new TwitterImpl();
     }
-
     @POST
     @Path("/postTweet")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -63,6 +63,25 @@ public class TwitterController {
         try {
             tweets = twitterimpl.fetchLatestTweet();
         } catch (Exception e) {
+            logger.error("Tweet could not be fetched");
+            return Response.status(500, "Request Was Not Completed").build();
+        }
+        return Response.ok(tweets).build();
+    }
+
+    @GET
+    @Path("/filter")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getFilterTweets(@QueryParam("searchKey") String searchKey)
+    {
+        System.out.println();
+        List<TwitterResponse> tweets;
+        try
+        {
+            tweets=twitterimpl.getTweetBasedOnMyFilter(searchKey);
+        }
+        catch (Exception e)
+        {
             logger.error("Tweet could not be fetched");
             return Response.status(500, "Request Was Not Completed").build();
         }

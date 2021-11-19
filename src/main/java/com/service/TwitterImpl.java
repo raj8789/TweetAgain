@@ -2,12 +2,10 @@ package com.service;
 
 import com.config.TWConfiguration;
 import com.model.TwitterResponse;
-import com.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
-
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
 import java.text.Format;
@@ -15,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TwitterImpl {
     TWConfiguration twConfiguration;
@@ -25,6 +24,8 @@ public class TwitterImpl {
 
 
     TwitterResponse twitterResponse;
+    //private TwitterResponse;
+
     // controller usage
     public TwitterImpl() {
         twConfiguration = new TWConfiguration();
@@ -34,8 +35,9 @@ public class TwitterImpl {
     }
 
     // used for test case
-    public TwitterImpl(TwitterFactory twitterFactory) {
+    public TwitterImpl(TwitterFactory twitterFactory,TwitterResponse twitterResponse) {
         this.twitterFactory = twitterFactory;
+        this.twitterResponse=twitterResponse;
         this.twitter = twitterFactory.getInstance();
     }
 
@@ -75,7 +77,6 @@ public class TwitterImpl {
                 Format dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 String date = dateFormat.format(created);
                 twitterResponse= new TwitterResponse(message,twitterHandle,name,profileImageUrl,date);
-                twitterResponse.setCreatedAt(date);
                 twitList.add(twitterResponse);
             }
         } catch (TwitterException e) {
@@ -86,5 +87,41 @@ public class TwitterImpl {
             logger.info("You Have No Tweets On your Timeline");
         }
         return twitList;
+    }
+    public List<TwitterResponse> getTweetBasedOnMyFilter(String tweet)
+    {
+        String twitterHandle;
+        String name;
+        String message;
+        String profileImageUrl;
+        Date created =null;
+        ArrayList<TwitterResponse> twitList=new ArrayList<>();
+        List<TwitterResponse> filterTwitList;
+        try
+        {
+            List<Status> statuses = twitter.getHomeTimeline();
+            for (int i = 0; i < statuses.size(); i++) {
+                Status s = statuses.get(i);
+                profileImageUrl = s.getUser().getProfileImageURL();
+                name = s.getUser().getName();
+                twitterHandle =s.getUser().getScreenName();
+                message = s.getText();
+                created = s.getCreatedAt();
+                Format dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                String date = dateFormat.format(created);
+                twitterResponse= new TwitterResponse(message,twitterHandle,name,profileImageUrl,date);
+                twitList.add(twitterResponse);
+            }
+        } catch (TwitterException e) {
+            logger.error("Error Occur", e);
+            throw new InternalServerErrorException("Server error, could not fetch tweet");
+        }
+        if (twitList.isEmpty()) {
+            logger.info("You Have No Tweets On your Timeline");
+        }
+        int end=tweet.length();
+        CharSequence charSequence=tweet.subSequence(0,end);
+        filterTwitList=twitList.stream().filter(t->t.getMessage().contains(charSequence)).collect(Collectors.toList());
+        return filterTwitList;
     }
 }
