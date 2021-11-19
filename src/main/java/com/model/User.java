@@ -9,7 +9,6 @@ public class User {
         this.name = name;
         this.profileImageUrl = profileImageUrl;
     }
-
     public String getTwitterHandle() {
         return twitterHandle;
     }
@@ -33,5 +32,4 @@ public class User {
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
     }
-
 }

@@ -6,6 +6,7 @@ import com.service.TwitterImpl;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import twitter4j.HttpRequest;
 import twitter4j.Status;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -55,17 +56,16 @@ public class TwitterController {
             }
         }
     }
-
     @GET
     @Path("/getTimeline")
     public Response getTweets() {
         ArrayList<TwitterResponse> tweets;
         try {
-            //tweets = twitterimpl.fetchLatestTweet();
+            tweets = twitterimpl.fetchLatestTweet();
         } catch (Exception e) {
             logger.error("Tweet could not be fetched");
             return Response.status(500, "Request Was Not Completed").build();
         }
-        return Response.ok(twitterimpl.fetchLatestTweet()).build();
+        return Response.ok(tweets).build();
     }
 }

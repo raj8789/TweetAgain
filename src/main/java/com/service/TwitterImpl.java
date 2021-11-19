@@ -23,11 +23,6 @@ public class TwitterImpl {
     Logger logger = LoggerFactory.getLogger(TwitterImpl.class);
     Twitter twitter;
 
-    String twitterHandle;
-    String name;
-    String message;
-    String profileImageUrl;
-    Date created = null;
 
     TwitterResponse twitterResponse;
     // controller usage
@@ -59,7 +54,13 @@ public class TwitterImpl {
         }
         return status;
     }
-    public ArrayList<TwitterResponse> fetchLatestTweet() {
+    public ArrayList<TwitterResponse> fetchLatestTweet()
+    {
+        String twitterHandle;
+        String name;
+        String message;
+        String profileImageUrl;
+        Date created = null;
         ArrayList<TwitterResponse> twitList=new ArrayList<>();
         try
         {
@@ -77,7 +78,6 @@ public class TwitterImpl {
                 twitterResponse.setCreatedAt(date);
                 twitList.add(twitterResponse);
             }
-            //twitterHandle=twitterResponse.getTwitterResponseList();
         } catch (TwitterException e) {
             logger.error("Error Occur", e);
             throw new InternalServerErrorException("Server error, could not fetch tweet");

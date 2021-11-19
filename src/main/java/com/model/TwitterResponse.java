@@ -34,7 +34,6 @@ public class TwitterResponse {
     public String getCreatedAt() {
         return createdAt;
     }
-
     public String setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
         return createdAt;
