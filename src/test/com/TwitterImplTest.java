@@ -12,6 +12,7 @@ import javax.ws.rs.InternalServerErrorException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import static org.mockito.Mockito.*;
@@ -92,8 +93,8 @@ public class TwitterImplTest
         ResponseList<Status> responseList = mock(ResponseList.class);
         when(responseList.size()).thenReturn(0);
         when(twitter.getHomeTimeline()).thenReturn(responseList);
-       // List<String> actual = twitterImpl.fetchLatestTweet();
-       // Assert.assertEquals(Arrays.asList(), actual);
+       ArrayList<TwitterResponse> actual = twitterImpl.fetchLatestTweet();
+       Assert.assertEquals(Arrays.asList(), actual);
     }
     @Test(expected = InternalServerErrorException.class)
     public void testCase_exceptionCase() throws TwitterException {

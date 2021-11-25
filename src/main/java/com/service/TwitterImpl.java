@@ -82,30 +82,8 @@ public class TwitterImpl {
     }
     public List<TwitterResponse> getTweetBasedOnMyFilter(String tweet)
     {
-        ArrayList<TwitterResponse> twitList=new ArrayList<>();
+        ArrayList<TwitterResponse> twitList=fetchLatestTweet();
         List<TwitterResponse> filterTwitList;
-        try
-        {
-            List<Status> statuses = twitter.getHomeTimeline();
-            for (int i = 0; i < statuses.size(); i++) {
-                Status s = statuses.get(i);
-                String profileImageUrl = s.getUser().getProfileImageURL();
-                String name = s.getUser().getName();
-                String  twitterHandle =s.getUser().getScreenName();
-                String message = s.getText();
-                Date created = s.getCreatedAt();
-                Format dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                String date = dateFormat.format(created);
-                twitterResponse= new TwitterResponse(message,twitterHandle,name,profileImageUrl,date);
-                twitList.add(twitterResponse);
-            }
-        } catch (TwitterException e) {
-            logger.error("Error Occur", e);
-            throw new InternalServerErrorException("Server error, could not fetch tweet");
-        }
-        if (twitList.isEmpty()) {
-            logger.info("You Have No Tweets On your Timeline");
-        }
         int end=tweet.length();
         CharSequence charSequence=tweet.subSequence(0,end);
         filterTwitList=twitList.stream().filter(t->t.getMessage().contains(charSequence)).collect(Collectors.toList());
