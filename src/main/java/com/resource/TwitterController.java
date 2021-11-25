@@ -74,7 +74,6 @@ public class TwitterController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getFilterTweets(@QueryParam("searchKey") String searchKey)
     {
-        System.out.println();
         List<TwitterResponse> tweets;
         try
         {

@@ -7,19 +7,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import twitter4j.*;
-
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
-import org.powermock.*;
-
 import static org.mockito.Mockito.*;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TwitterImplTest
@@ -43,7 +39,6 @@ public class TwitterImplTest
         }
         date = dateFormat.format(created);
     }
-
     @Before
     public void setUp() {
         twitterFactory = mock(TwitterFactory.class);
@@ -72,9 +67,8 @@ public class TwitterImplTest
         ArrayList<TwitterResponse> actualListExpected = twitterImpl.fetchLatestTweet();
         Assert.assertEquals(twitListExpected,actualListExpected);
     }
-
     @Test
-    public void testCase_fetchFilterTweet_successCase() throws TwitterException{
+    public void testCase_fetchFilterTweet_successCase() throws Exception {
         Status s1 = mock(Status.class);
         User user=mock(User.class);
         ResponseList<Status> responseList = mock(ResponseList.class);
@@ -88,8 +82,9 @@ public class TwitterImplTest
         when(s1.getText()).thenReturn(message);
         when(s1.getCreatedAt()).thenReturn(created);
         when(twitter.getHomeTimeline()).thenReturn(responseList);
+        whenNew(TwitterResponse.class).withAnyArguments().thenReturn(twitterResponse);
         twitListExpected.add(null);
-        List<TwitterResponse> actualListExpected = twitterImpl.getTweetBasedOnMyFilter("oo");
+        List<TwitterResponse> actualListExpected = twitterImpl.getTweetBasedOnMyFilter("ee");
         Assert.assertEquals(twitListExpected,actualListExpected);
     }
     @Test
@@ -97,11 +92,9 @@ public class TwitterImplTest
         ResponseList<Status> responseList = mock(ResponseList.class);
         when(responseList.size()).thenReturn(0);
         when(twitter.getHomeTimeline()).thenReturn(responseList);
-
        // List<String> actual = twitterImpl.fetchLatestTweet();
        // Assert.assertEquals(Arrays.asList(), actual);
     }
-
     @Test(expected = InternalServerErrorException.class)
     public void testCase_exceptionCase() throws TwitterException {
         when(twitter.getHomeTimeline()).thenThrow(TwitterException.class);

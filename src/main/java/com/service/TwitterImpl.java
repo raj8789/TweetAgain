@@ -24,8 +24,6 @@ public class TwitterImpl {
 
 
     TwitterResponse twitterResponse;
-    //private TwitterResponse;
-
     // controller usage
     public TwitterImpl() {
         twConfiguration = new TWConfiguration();
@@ -33,7 +31,6 @@ public class TwitterImpl {
         twitterFactory = new TwitterFactory(configurationBuilder.build());
         twitter = twitterFactory.getInstance();
     }
-
     // used for test case
     public TwitterImpl(TwitterFactory twitterFactory,TwitterResponse twitterResponse) {
         this.twitterFactory = twitterFactory;
@@ -58,22 +55,17 @@ public class TwitterImpl {
     }
     public ArrayList<TwitterResponse> fetchLatestTweet()
     {
-        String twitterHandle;
-        String name;
-        String message;
-        String profileImageUrl;
-        Date created = null;
         ArrayList<TwitterResponse> twitList=new ArrayList<>();
         try
         {
             List<Status> statuses = twitter.getHomeTimeline();
             for (int i = 0; i < statuses.size(); i++) {
                 Status s = statuses.get(i);
-                profileImageUrl = s.getUser().getProfileImageURL();
-                name = s.getUser().getName();
-                twitterHandle =s.getUser().getScreenName();
-                message = s.getText();
-                created = s.getCreatedAt();
+                String profileImageUrl = s.getUser().getProfileImageURL();
+                String name = s.getUser().getName();
+                String twitterHandle =s.getUser().getScreenName();
+                String message = s.getText();
+                Date created = s.getCreatedAt();
                 Format dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 String date = dateFormat.format(created);
                 twitterResponse= new TwitterResponse(message,twitterHandle,name,profileImageUrl,date);
@@ -90,11 +82,6 @@ public class TwitterImpl {
     }
     public List<TwitterResponse> getTweetBasedOnMyFilter(String tweet)
     {
-        String twitterHandle;
-        String name;
-        String message;
-        String profileImageUrl;
-        Date created =null;
         ArrayList<TwitterResponse> twitList=new ArrayList<>();
         List<TwitterResponse> filterTwitList;
         try
@@ -102,11 +89,11 @@ public class TwitterImpl {
             List<Status> statuses = twitter.getHomeTimeline();
             for (int i = 0; i < statuses.size(); i++) {
                 Status s = statuses.get(i);
-                profileImageUrl = s.getUser().getProfileImageURL();
-                name = s.getUser().getName();
-                twitterHandle =s.getUser().getScreenName();
-                message = s.getText();
-                created = s.getCreatedAt();
+                String profileImageUrl = s.getUser().getProfileImageURL();
+                String name = s.getUser().getName();
+                String  twitterHandle =s.getUser().getScreenName();
+                String message = s.getText();
+                Date created = s.getCreatedAt();
                 Format dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 String date = dateFormat.format(created);
                 twitterResponse= new TwitterResponse(message,twitterHandle,name,profileImageUrl,date);
