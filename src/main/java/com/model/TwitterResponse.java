@@ -14,7 +14,6 @@ public class TwitterResponse {
     public TwitterResponse() {
 
     }
-
     public void setUser(User user) {
         this.user = user;
     }
