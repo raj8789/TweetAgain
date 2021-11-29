@@ -33,9 +33,11 @@ public class TwitterImplTest
     Date created;
     String date;
     {
-        try {
+        try
+        {
             created = dateFormat.parse("2015-12-06 17:03:00");
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
             e.printStackTrace();
         }
         date = dateFormat.format(created);
@@ -48,9 +50,8 @@ public class TwitterImplTest
         when(twitterFactory.getInstance()).thenReturn(twitter);
         twitterImpl = new TwitterImpl(twitterFactory,twitterResponse);
     }
-
     @Test
-    public void testCase_fetchTweet_successCase() throws TwitterException{
+    public void testCase_fetchTweet_successCase() throws Exception {
         Status s1 = mock(Status.class);
         User user=mock(User.class);
         ResponseList<Status> responseList = mock(ResponseList.class);
@@ -64,6 +65,7 @@ public class TwitterImplTest
         when(s1.getText()).thenReturn(message);
         when(s1.getCreatedAt()).thenReturn(created);
         when(twitter.getHomeTimeline()).thenReturn(responseList);
+        whenNew(TwitterResponse.class).withAnyArguments().thenReturn(twitterResponse);
         twitListExpected.add(twitterResponse);
         ArrayList<TwitterResponse> actualListExpected = twitterImpl.fetchLatestTweet();
         Assert.assertEquals(twitListExpected,actualListExpected);
@@ -85,7 +87,7 @@ public class TwitterImplTest
         when(twitter.getHomeTimeline()).thenReturn(responseList);
         whenNew(TwitterResponse.class).withAnyArguments().thenReturn(twitterResponse);
         twitListExpected.add(null);
-        List<TwitterResponse> actualListExpected = twitterImpl.getTweetBasedOnMyFilter("ee");
+        List<TwitterResponse> actualListExpected = twitterImpl.getTweetBasedOnMyFilter("eeeeeeee");
         Assert.assertEquals(twitListExpected,actualListExpected);
     }
     @Test
@@ -101,7 +103,6 @@ public class TwitterImplTest
         when(twitter.getHomeTimeline()).thenThrow(TwitterException.class);
         twitterImpl.fetchLatestTweet();
     }
-
     @Test
     public void testCase_sendTweet_successCase() throws TwitterException {
         Status expected = mock(Status.class);
@@ -110,7 +111,6 @@ public class TwitterImplTest
         Status actual = twitterImpl.sendTweets(tweet);
         Assert.assertEquals(expected, actual);
     }
-
     @Test(expected = BadRequestException.class)
     public void testCase_SendTweetFailCaseLongLengthTweet() {
         String tweet = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\" +\n" +
@@ -120,7 +120,6 @@ public class TwitterImplTest
                 "                \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"+\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         twitterImpl.sendTweets(tweet);
     }
-
     @Test(expected = BadRequestException.class)
     public void testCase_SendTweetFailCaseZeroLengthTweet() {
         String tweet = "";
