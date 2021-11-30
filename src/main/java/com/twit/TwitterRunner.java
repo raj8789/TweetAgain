@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-@SpringBootApplication(scanBasePackages = { "com.config","com.Model","com.resource","com.service" })
+@SpringBootApplication(scanBasePackages = { "com.config","com.Model","com.resource","com.service" ,"com.ExceptionHandler"})
 public class TwitterRunner extends Application<TWConfiguration> {
     TWConfiguration twConfiguration;
     Environment environment;
@@ -27,7 +27,6 @@ public class TwitterRunner extends Application<TWConfiguration> {
          ConfigurableApplicationContext context=SpringApplication.run(TwitterRunner.class,args);
          twitterController=context.getBean(TwitterController.class);
     }
-
     @Override
     public void run(TWConfiguration twConfiguration, Environment environment){
         environment.jersey().register(twitterController);

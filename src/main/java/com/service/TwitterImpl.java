@@ -72,11 +72,14 @@ public class TwitterImpl {
                 twitterResponse= new TwitterResponse(message,twitterHandle,name,profileImageUrl,date);
                 twitList.add(twitterResponse);
             }
-        } catch (TwitterException e) {
+        }
+        catch (TwitterException e)
+        {
             logger.error("Error Occur", e);
             throw new InternalServerErrorException("Server error, could not fetch tweet");
         }
-        if (twitList.isEmpty()) {
+        if (twitList.isEmpty())
+        {
             logger.info("You Have No Tweets On your Timeline");
         }
         return twitList;

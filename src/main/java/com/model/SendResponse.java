@@ -3,8 +3,10 @@ package com.model;
 public class SendResponse {
     private  int statusCode;
     private String message;
-    public SendResponse(String message,int statusCode)
+    private int code;
+    public SendResponse(int code,String message,int statusCode)
     {
+        this.code=code;
         this.message=message;
         this.statusCode=statusCode;
     }

@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import static org.mockito.Mockito.*;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TwitterImplTest
@@ -55,7 +54,7 @@ public class TwitterImplTest
         Status s1 = mock(Status.class);
         User user=mock(User.class);
         ResponseList<Status> responseList = mock(ResponseList.class);
-        ArrayList<TwitterResponse> twitListExpected=mock(ArrayList.class);
+        ArrayList<TwitterResponse> twitListExpected=spy(ArrayList.class);
         when(responseList.size()).thenReturn(1);
         when(responseList.get(0)).thenReturn(s1);
         when(s1.getUser()).thenReturn(user);
@@ -65,17 +64,16 @@ public class TwitterImplTest
         when(s1.getText()).thenReturn(message);
         when(s1.getCreatedAt()).thenReturn(created);
         when(twitter.getHomeTimeline()).thenReturn(responseList);
-        whenNew(TwitterResponse.class).withAnyArguments().thenReturn(twitterResponse);
         twitListExpected.add(twitterResponse);
         ArrayList<TwitterResponse> actualListExpected = twitterImpl.fetchLatestTweet();
-        Assert.assertEquals(twitListExpected,actualListExpected);
+        Assert.assertEquals(twitListExpected.size(),actualListExpected.size());
     }
     @Test
     public void testCase_fetchFilterTweet_successCase() throws Exception {
         Status s1 = mock(Status.class);
         User user=mock(User.class);
         ResponseList<Status> responseList = mock(ResponseList.class);
-        List<TwitterResponse> twitListExpected=mock(ArrayList.class);
+        List<TwitterResponse> twitListExpected=spy(ArrayList.class);
         when(responseList.size()).thenReturn(1);
         when(responseList.get(0)).thenReturn(s1);
         when(s1.getUser()).thenReturn(user);
@@ -85,10 +83,8 @@ public class TwitterImplTest
         when(s1.getText()).thenReturn(message);
         when(s1.getCreatedAt()).thenReturn(created);
         when(twitter.getHomeTimeline()).thenReturn(responseList);
-        whenNew(TwitterResponse.class).withAnyArguments().thenReturn(twitterResponse);
-        twitListExpected.add(null);
         List<TwitterResponse> actualListExpected = twitterImpl.getTweetBasedOnMyFilter("eeeeeeee");
-        Assert.assertEquals(twitListExpected,actualListExpected);
+        Assert.assertEquals(twitListExpected.size(),actualListExpected.size());
     }
     @Test
     public void testCase_fetchNoTweetOnTimeline_successCase() throws TwitterException {

@@ -3,6 +3,7 @@ package com.resource;
 import com.model.TwitterResponse;
 import com.model.SendResponse;
 import com.service.TwitterImpl;
+import org.eclipse.jetty.http.HttpStatus;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,27 +31,30 @@ public class TwitterController {
     @RequestMapping(method = RequestMethod.POST,value = "postTweet")
     public SendResponse sendTweet(@RequestBody TweetPostRequest tweetPostRequest) {
         String tweet = tweetPostRequest.getMessage();
-        if (StringUtil.isEmpty(tweet)) {
+        if (StringUtil.isEmpty(tweet))
+        {
             logger.error("Enter a Valid Tweet");
-            return new SendResponse("Please enter a Valid Tweet",400);
-        } else {
-            try {
+            return new SendResponse(HttpStatus.BAD_REQUEST_400,"Please enter a Valid Tweet",400);
+        } else
+        {
+            try
+            {
                 Status status = twitterimpl.sendTweets(tweet);
                 if (status.getText().equals(tweet))
                 {
                     logger.info("Tweet Send Successfully");
-                    return new SendResponse("Tweet posted Successfully",200);
+                    return new SendResponse(HttpStatus.OK_200,"Tweet posted Successfully",200);
                 } else
                 {
                     logger.error("Tweet Was Not Done Invalid Request");
-                    return new SendResponse("Request was not completed",500);
+                    return new SendResponse(HttpStatus.INTERNAL_SERVER_ERROR_500,"Request tweet is not correct",500);
                 }
             } catch (BadRequestException e) {
                 logger.error("Tweet Was Not Done Invalid Request", e);
-                return new SendResponse("Request tweet is not correct",400);
+                return new SendResponse(HttpStatus.BAD_REQUEST_400,"Please enter a Valid Tweet",400);
             } catch (Exception e) {
                 logger.error("Tweet Was Not Sent");
-                return new SendResponse("Request was not completed",500);
+                return new SendResponse(HttpStatus.INTERNAL_SERVER_ERROR_500,"Request tweet is not correct",400);
             }
         }
     }
