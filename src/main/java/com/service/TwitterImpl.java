@@ -4,6 +4,8 @@ import com.config.TWConfiguration;
 import com.model.TwitterResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 import javax.ws.rs.BadRequestException;
@@ -15,21 +17,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class TwitterImpl {
-    TWConfiguration twConfiguration;
     ConfigurationBuilder configurationBuilder;
     TwitterFactory twitterFactory;
     Logger logger = LoggerFactory.getLogger(TwitterImpl.class);
     Twitter twitter;
-
-
     TwitterResponse twitterResponse;
+    @Autowired
+    TWConfiguration twConfiguration;
     // controller usage
     public TwitterImpl() {
-        twConfiguration = new TWConfiguration();
-        configurationBuilder = twConfiguration.configurationBuilder();
-        twitterFactory = new TwitterFactory(configurationBuilder.build());
-        twitter = twitterFactory.getInstance();
+       twConfiguration = new TWConfiguration();
+       configurationBuilder = twConfiguration.configurationBuilder();
+       twitterFactory = new TwitterFactory(configurationBuilder.build());
+       twitter = twitterFactory.getInstance();
     }
     // used for test case
     public TwitterImpl(TwitterFactory twitterFactory,TwitterResponse twitterResponse) {
@@ -37,7 +39,6 @@ public class TwitterImpl {
         this.twitterResponse=twitterResponse;
         this.twitter = twitterFactory.getInstance();
     }
-
     public Status sendTweets(String tweet) {
         int tweetLength = tweet.length();
         if (tweetLength > 280 || tweetLength == 0) {
@@ -71,11 +72,14 @@ public class TwitterImpl {
                 twitterResponse= new TwitterResponse(message,twitterHandle,name,profileImageUrl,date);
                 twitList.add(twitterResponse);
             }
-        } catch (TwitterException e) {
+        }
+        catch (TwitterException e)
+        {
             logger.error("Error Occur", e);
             throw new InternalServerErrorException("Server error, could not fetch tweet");
         }
-        if (twitList.isEmpty()) {
+        if (twitList.isEmpty())
+        {
             logger.info("You Have No Tweets On your Timeline");
         }
         return twitList;
