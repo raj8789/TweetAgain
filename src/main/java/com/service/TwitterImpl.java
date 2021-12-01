@@ -5,6 +5,9 @@ import com.model.TwitterResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
@@ -16,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@CacheConfig(cacheNames={"allTweets","filters"})
 @Component
 public class TwitterImpl {
     ConfigurationBuilder configurationBuilder;
@@ -39,6 +42,8 @@ public class TwitterImpl {
         this.twitterResponse=twitterResponse;
         this.twitter = twitterFactory.getInstance();
     }
+    @Cacheable(cacheNames={"allTweets"})
+    @CacheEvict(cacheNames={"allTweets"},allEntries = true)
     public Status sendTweets(String tweet) {
         int tweetLength = tweet.length();
         if (tweetLength > 280 || tweetLength == 0) {
@@ -54,6 +59,7 @@ public class TwitterImpl {
         }
         return status;
     }
+    @Cacheable(cacheNames={"allTweets"})
     public ArrayList<TwitterResponse> fetchLatestTweet()
     {
         ArrayList<TwitterResponse> twitList=new ArrayList<>();
@@ -84,6 +90,7 @@ public class TwitterImpl {
         }
         return twitList;
     }
+    @Cacheable(cacheNames={"filters"})
     public List<TwitterResponse> getTweetBasedOnMyFilter(String tweet)
     {
         ArrayList<TwitterResponse> twitList=fetchLatestTweet();

@@ -2,14 +2,16 @@ package com.twit;
 
 import com.config.TWConfiguration;
 import com.resource.TwitterController;
-import com.service.TwitterImpl;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@EnableCaching
 @SpringBootApplication(scanBasePackages = { "com.config","com.Model","com.resource","com.service" ,"com.ExceptionHandler"})
 public class TwitterRunner extends Application<TWConfiguration> {
     TWConfiguration twConfiguration;
