@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import sun.jvm.hotspot.memory.HeapBlock;
 import twitter4j.Status;
 import javax.ws.rs.*;
@@ -35,14 +36,12 @@ public class TwitterController {
     @RequestMapping(method = RequestMethod.POST,value = "postTweet")
     public ResponseEntity<SendResponse> sendTweet(@RequestBody TweetPostRequest tweetPostRequest) {
         String tweet = tweetPostRequest.getMessage();
-        HttpHeaders headers=null;
-        headers = new HttpHeaders();
-        headers.add("Custom-Header", "foo");
+        HttpHeaders headers = new HttpHeaders();
         if (StringUtil.isEmpty(tweet))
         {
             logger.error("Enter a Valid Tweet");
             return new ResponseEntity<SendResponse>(
-                    new SendResponse(HttpStatus.BAD_REQUEST_400,"Please enter a Valid Tweet",400),headers,HttpStatus.OK_200);
+                    new SendResponse("Please enter a Valid Tweet"),headers,HttpStatus.BAD_REQUEST_400);
         } else
         {
             try
@@ -52,21 +51,19 @@ public class TwitterController {
                 {
                     logger.info("Tweet Send Successfully");
                     return new ResponseEntity<SendResponse>(
-                            new SendResponse(HttpStatus.OK_200,"Tweet posted Successfully",200),headers,HttpStatus.OK_200);
+                            new SendResponse("Tweet posted Successfully"),headers,HttpStatus.OK_200);
                 } else
                 {
                     logger.error("Tweet Was Not Done Invalid Request");
                     return new ResponseEntity<SendResponse>(
-                            new SendResponse(HttpStatus.INTERNAL_SERVER_ERROR_500,"Request tweet is not correct",500),headers,HttpStatus.INTERNAL_SERVER_ERROR_500);
+                            new SendResponse("Request tweet is not correct"),headers,HttpStatus.INTERNAL_SERVER_ERROR_500);
                 }
             } catch (BadRequestException e) {
                 logger.error("Tweet Was Not Done Invalid Request", e);
-                return new ResponseEntity<SendResponse>(
-                        new SendResponse(HttpStatus.BAD_REQUEST_400,"Please enter a Valid Tweet",400),headers,HttpStatus.BAD_REQUEST_400);
+               throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR_500, "Please enter a Valid Tweet",e);
             } catch (Exception e) {
                 logger.error("Tweet Was Not Sent");
-                return new ResponseEntity<SendResponse>(
-                        new SendResponse(HttpStatus.INTERNAL_SERVER_ERROR_500,"Request tweet is not correct",400),headers,HttpStatus.BAD_REQUEST_400);
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST_400, "Request tweet is not correct",e);
             }
         }
     }
