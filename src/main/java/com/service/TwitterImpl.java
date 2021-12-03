@@ -28,15 +28,40 @@ import java.util.stream.Collectors;
 @CacheConfig(cacheNames = {"allTweets", " filters"})
 @Component
 public class TwitterImpl {
+    /**
+     * .
+     * TwitterFactory object
+     */
     private final TwitterFactory twitterFactory;
+    /**
+     * .
+     * Logger object
+     */
     private final Logger logger = LoggerFactory.getLogger(TwitterImpl.class);
+    /**
+     * .
+     * Twitter object
+     */
     private final Twitter twitter;
+    /**
+     * .
+     * Configurationbuilder object
+     */
     private ConfigurationBuilder configurationBuilder;
+    /**
+     * .
+     * TwitterResponse object
+     */
     private TwitterResponse twitterResponse;
+    /**
+     * .
+     * TWConfiguration object for configuring
+     */
     @Autowired
     private TWConfiguration twConfiguration;
 
     /**
+     * .
      * Used for test case.
      * this constructor is used for getting Twitter object
      * based on the authentication of user
@@ -49,14 +74,15 @@ public class TwitterImpl {
     }
 
     /**
+     * .
      * Used for test case.
      *
-     * @param twitterFactory
-     * @param twitterResponse
+     * @param ttwitterFactory
+     * @param ttwitterResponse
      */
-    public TwitterImpl(final TwitterFactory twitterFactory, final TwitterResponse twitterResponse) {
-        this.twitterFactory = twitterFactory;
-        this.twitterResponse = twitterResponse;
+    public TwitterImpl(final TwitterFactory ttwitterFactory, final TwitterResponse ttwitterResponse) {
+        this.twitterFactory = ttwitterFactory;
+        this.twitterResponse = ttwitterResponse;
         this.twitter = twitterFactory.getInstance();
     }
 

@@ -23,21 +23,43 @@ import org.springframework.scheduling.annotation.EnableScheduling;
         "com.service",
         "com.ExceptionHandler"})
 public class TwitterRunner extends Application<TWConfiguration> {
-    private static final Logger logger = LoggerFactory.getLogger(TwitterRunner.class);
+    /**
+     * .
+     * logger object is created for logging info and error
+     */
+    private static final Logger logger =
+            LoggerFactory.getLogger(TwitterRunner.class);
+    /**
+     * .
+     * TwitterController object is created for register to run
+     */
     private static TwitterController twitterController;
+    /**
+     * .
+     * TWConfiguration object is created for configuration
+     */
     private TWConfiguration twConfiguration;
+    /**
+     * .
+     * Environment object is created for set environment
+     */
     private Environment environment;
 
     /**
      * Logger is used log message in this class.
-     * displays message once successfully project runs and main method gets called.
+     * displays message once successfully
+     * project runs and main method gets called.
+     *
+     * @param eenvironment     for environment registration
+     * @param ttwConfiguration for TwitterRunner configuration
      */
-    public TwitterRunner(final TWConfiguration twConfiguration, final Environment environment) {
-        this.twConfiguration = twConfiguration;
-        this.environment = environment;
+    public TwitterRunner(final TWConfiguration ttwConfiguration, final Environment eenvironment) {
+        this.twConfiguration = ttwConfiguration;
+        this.environment = eenvironment;
     }
 
     /**
+     * .
      * constructor
      */
     public TwitterRunner() {
@@ -57,11 +79,11 @@ public class TwitterRunner extends Application<TWConfiguration> {
     /**
      * run() used to run the class and calls TwitterResources class.
      *
-     * @param twConfiguration calls TWConfiguration class.
-     * @param environment     sets environment to run project.
+     * @param ttwConfiguration calls TWConfiguration class.
+     * @param environments     sets environment to run project.
      */
     @Override
-    public void run(final TWConfiguration twConfiguration, final Environment environment) {
+    public void run(final TWConfiguration ttwConfiguration, final Environment environments) {
         environment.jersey().register(twitterController);
     }
 }

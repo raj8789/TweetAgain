@@ -11,12 +11,40 @@ import java.util.Properties;
 
 @Component
 public class TWConfiguration extends Configuration {
+    /**
+     * .
+     * store file name
+     */
     private final String filepath = "twitter4j.yml";
+    /**
+     * .
+     * properties object creation
+     */
     private final Properties properties = new Properties();
+    /**
+     * .
+     * store accessTokenSecret
+     */
     private String accessTokenSecret = "";
+    /**
+     * .
+     * store consumerSecret
+     */
     private String consumerSecret = "";
+    /**
+     * .
+     * store consumerKey
+     */
     private String consumerKey = "";
+    /**
+     * .
+     * store accessToken
+     */
     private String accessToken = "";
+    /**
+     * .
+     * store fileInputStream object
+     */
     private FileInputStream fileInputStream;
 
     {
@@ -37,6 +65,8 @@ public class TWConfiguration extends Configuration {
     }
 
     /**
+     * .
+     *
      * @return configurationbuilder object
      */
     public ConfigurationBuilder configurationBuilder() {

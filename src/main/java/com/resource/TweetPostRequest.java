@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class TweetPostRequest {
     /**
+     * .
      * Takes the tweet message from the postman
      * json body and sends to postTweet() to post a tweet on timeline.
      *
@@ -17,13 +18,20 @@ public class TweetPostRequest {
     private String message;
 
     /**
+     * .
      * constructor
      */
     public TweetPostRequest() {
     }
 
-    public TweetPostRequest(final String message) {
-        this.message = message;
+    /**
+     * .
+     * Constructor takes message and store
+     *
+     * @param messages
+     */
+    public TweetPostRequest(final String messages) {
+        this.message = messages;
     }
 
     /**

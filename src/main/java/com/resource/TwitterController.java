@@ -40,13 +40,15 @@ public class TwitterController {
     /**
      * Used for test cases.
      * <p>
-     * twitterimpl is object of Twitterimpl class
+     *
+     * @param ttwitterimpl is object of Twitterimpl class
      */
-    public TwitterController(final TwitterImpl twitterimpl) {
-        this.twitterimpl = twitterimpl;
+    public TwitterController(final TwitterImpl ttwitterimpl) {
+        this.twitterimpl = ttwitterimpl;
     }
 
     /**
+     * .
      * Constructor
      */
     public TwitterController() {
@@ -57,7 +59,8 @@ public class TwitterController {
      * <p>
      * request used to get tweets which has to be posted.
      *
-     * @return used to return response based on successful or unsuccessful post of tweet.
+     * @param tweetPostRequest used for requesting Configuration
+     * @return used to return response \t based on successful or unsuccessful post of tweet.
      */
     @RequestMapping(method = RequestMethod.POST, value = "postTweet")
     public ResponseEntity<SendResponse> sendTweet(@RequestBody final TweetPostRequest tweetPostRequest) {
@@ -109,6 +112,7 @@ public class TwitterController {
     /**
      * getFilterTweets method used to fetch filtered tweets from TwitterImplement.getFilteredTweets().
      *
+     * @param search of matching string
      * @return used to return filtered tweets as response.
      */
     @RequestMapping("/filter/{search}")
