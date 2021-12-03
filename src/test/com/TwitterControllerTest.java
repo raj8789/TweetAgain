@@ -19,6 +19,8 @@ import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -34,7 +36,7 @@ public class TwitterControllerTest {
         headers =new HttpHeaders();
     }
     @Test
-    public void testCase_tweeterController_sendTweet() throws TwitterException {
+    public void testCase_tweeterController_sendTweet() {
         TweetPostRequest tweetPostRequest = new TweetPostRequest("My Tweet");
         Status status = mock(Status.class);
         when(status.getText()).thenReturn("My Tweet");
@@ -45,7 +47,7 @@ public class TwitterControllerTest {
     }
     // 1, empty tweet, 2. status.getText -"error" 3. BadRequestException 4. InternalServerErrorException
     @Test
-    public void testCase_tweeterControllerNull_sendTweet() throws TwitterException {
+    public void testCase_tweeterControllerNull_sendTweet(){
         TweetPostRequest tweetPostRequest = new TweetPostRequest("");
         ResponseEntity<SendResponse> actual = twitterController.sendTweet(tweetPostRequest);
         ResponseEntity<SendResponse> expected =new ResponseEntity<SendResponse>(new SendResponse("Please enter a Valid Tweet"),headers,HttpStatus.BAD_REQUEST_400);
@@ -94,6 +96,22 @@ public class TwitterControllerTest {
         when(twitterimpl.fetchLatestTweet()).thenThrow(InternalServerErrorException.class);
         Response actual = twitterController.getTweets();
         Response expected = Response.status(500, "Request Was Not Completed").build();
+        Assertions.assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);
+    }
+    @Test
+    public void testCase_FilterTweet(){
+        String message="be cool always";
+        String twitterHandle="@masum";
+        String name="Masum Raj";
+        String profileurl="www.MasumRaj.com";
+        String date="";
+        String search="cool";
+        TwitterResponse twitterResponse=new TwitterResponse(message,twitterHandle,name,profileurl,date);
+        List<TwitterResponse> twitList=new ArrayList<>();
+        twitList.add(twitterResponse);
+        when(twitterimpl.getTweetBasedOnMyFilter(search)).thenReturn(twitList);
+        Response actual=twitterController.getFilterTweets(search);
+        Response expected=Response.ok(twitList).build();
         Assertions.assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);
     }
 }

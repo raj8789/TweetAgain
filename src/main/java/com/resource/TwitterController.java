@@ -1,3 +1,6 @@
+/**
+ * This package contains resources classes.
+ */
 package com.resource;
 
 import com.model.TwitterResponse;
@@ -21,16 +24,31 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @RestController
 public class TwitterController {
+    /**
+     * Logger is used to log messages to user.
+     */
     private final Logger logger = LoggerFactory.getLogger(TwitterController.class);
+    /**
+     * Logger is used to log messages to user.
+     */
     @Autowired
     TwitterImpl twitterimpl;
-    SendResponse sendResponse;
-    // used by test class
+    /**
+     * Used for test cases.
+     *
+     * twitterimpl is object of Twitterimpl class
+     */
     public TwitterController(TwitterImpl twitterimpl) {
         this.twitterimpl = twitterimpl;
     }
     public TwitterController() {
     }
+    /**
+     * postTweet method used to give response on post tweet to user timeline.
+     *
+     * request used to get tweets which has to be posted.
+     * @return used to return response based on successful or unsuccessful post of tweet.
+     */
     @RequestMapping(method = RequestMethod.POST,value = "postTweet")
     public ResponseEntity<SendResponse> sendTweet(@RequestBody TweetPostRequest tweetPostRequest) {
         String tweet = tweetPostRequest.getMessage();
@@ -65,6 +83,11 @@ public class TwitterController {
             }
         }
     }
+    /**
+     * getTimeline method used to fetch tweets which is returned from TwitterImplement.myTimeline().
+     *
+     * @return used to return tweets as response.
+     */
     @RequestMapping("/getTimeline")
     public Response getTweets() {
         ArrayList<TwitterResponse> tweets;
@@ -76,6 +99,11 @@ public class TwitterController {
         }
         return Response.ok(tweets).build();
     }
+    /**
+     * getFilterTweets method used to fetch filtered tweets from TwitterImplement.getFilteredTweets().
+     *
+     * @return used to return filtered tweets as response.
+     */
     @RequestMapping("/filter/{search}")
     public Response getFilterTweets(@PathVariable String  search) {
         List<TwitterResponse> tweets;

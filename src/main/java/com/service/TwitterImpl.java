@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
@@ -19,32 +20,36 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-@CacheConfig(cacheNames={"allTweets","filters"})
+
+@CacheConfig(cacheNames = { "allTweets", " filters"})
 @Component
 public class TwitterImpl {
-    ConfigurationBuilder configurationBuilder;
-    TwitterFactory twitterFactory;
-    Logger logger = LoggerFactory.getLogger(TwitterImpl.class);
-    Twitter twitter;
-    TwitterResponse twitterResponse;
+    private ConfigurationBuilder configurationBuilder;
+    private TwitterFactory twitterFactory;
+    private Logger logger = LoggerFactory.getLogger(TwitterImpl.class);
+    private Twitter twitter;
+    private TwitterResponse twitterResponse;
     @Autowired
-    TWConfiguration twConfiguration;
-    // controller usage
+    private TWConfiguration twConfiguration;
     public TwitterImpl() {
        twConfiguration = new TWConfiguration();
        configurationBuilder = twConfiguration.configurationBuilder();
        twitterFactory = new TwitterFactory(configurationBuilder.build());
        twitter = twitterFactory.getInstance();
     }
-    // used for test case
-    public TwitterImpl(TwitterFactory twitterFactory,TwitterResponse twitterResponse) {
+    /**
+     * Used for test case.
+     *
+     * @param twitterFactory
+     * @param twitterResponse
+     */
+    public TwitterImpl(final TwitterFactory twitterFactory, final TwitterResponse twitterResponse) {
         this.twitterFactory = twitterFactory;
-        this.twitterResponse=twitterResponse;
+        this.twitterResponse = twitterResponse;
         this.twitter = twitterFactory.getInstance();
     }
-    @Cacheable(cacheNames={"allTweets"})
-    @CacheEvict(cacheNames={"allTweets"},allEntries = true)
-    public Status sendTweets(String tweet) {
+    @Cacheable(cacheNames = {"allTweets"})
+    public Status sendTweets(final String tweet) {
         int tweetLength = tweet.length();
         if (tweetLength > 280 || tweetLength == 0) {
             logger.error("Tweet can should be between 0 to 280");
@@ -59,45 +64,51 @@ public class TwitterImpl {
         }
         return status;
     }
-    @Cacheable(cacheNames={"allTweets"})
-    public ArrayList<TwitterResponse> fetchLatestTweet()
-    {
-        ArrayList<TwitterResponse> twitList=new ArrayList<>();
-        try
-        {
+    /**
+     * fetchLatestTweet() used to get tweets from user timeline.
+     *
+     * @return returns tweets to resources class.
+     */
+    @Cacheable(cacheNames = {"allTweets"})
+    @Scheduled(fixedRate = 1 * 1000)
+    public ArrayList<TwitterResponse> fetchLatestTweet() {
+        ArrayList<TwitterResponse> twitList = new ArrayList<>();
+        try {
             List<Status> statuses = twitter.getHomeTimeline();
             for (int i = 0; i < statuses.size(); i++) {
                 Status s = statuses.get(i);
                 String profileImageUrl = s.getUser().getProfileImageURL();
                 String name = s.getUser().getName();
-                String twitterHandle =s.getUser().getScreenName();
+                String twitterHandle = s.getUser().getScreenName();
                 String message = s.getText();
                 Date created = s.getCreatedAt();
                 Format dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 String date = dateFormat.format(created);
-                twitterResponse= new TwitterResponse(message,twitterHandle,name,profileImageUrl,date);
-                twitList.add(twitterResponse);
-            }
+                twitterResponse = new TwitterResponse(message, twitterHandle, name, profileImageUrl, date);
+                twitList.add(twitterResponse); }
         }
-        catch (TwitterException e)
-        {
+        catch (TwitterException e) {
             logger.error("Error Occur", e);
             throw new InternalServerErrorException("Server error, could not fetch tweet");
         }
-        if (twitList.isEmpty())
-        {
+        if (twitList.isEmpty()) {
             logger.info("You Have No Tweets On your Timeline");
         }
         return twitList;
     }
-    @Cacheable(cacheNames={"filters"})
-    public List<TwitterResponse> getTweetBasedOnMyFilter(String tweet)
-    {
-        ArrayList<TwitterResponse> twitList=fetchLatestTweet();
+    /**
+     * getFilteredTweets() used to get filtered tweets from user timeline.
+     *
+     * @param searchTweet is used to search in a list of tweets.
+     * @return returns filtered tweets.
+     */
+    @Cacheable(cacheNames = {"filters"})
+    public List<TwitterResponse> getTweetBasedOnMyFilter(final  String searchTweet) {
+        ArrayList<TwitterResponse> twitList = fetchLatestTweet();
         List<TwitterResponse> filterTwitList;
-        int end=tweet.length();
-        CharSequence charSequence=tweet.subSequence(0,end);
-        filterTwitList=twitList.stream().filter(t->t.getMessage().contains(charSequence)).collect(Collectors.toList());
+        int end =searchTweet.length();
+        CharSequence charSequence = searchTweet.subSequence(0, end);
+        filterTwitList = twitList.stream().filter(t -> t.getMessage().contains(charSequence)).collect(Collectors.toList());
         return filterTwitList;
     }
 }
