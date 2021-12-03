@@ -1,4 +1,5 @@
 package com.model;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ public class User {
     private String twitterHandle;
     private String name;
     private String profileImageUrl;
+
     /**
      * @param twitterHandle   specifies ScreenName of user who posted tweet.
      * @param name            specifies name of user who posted tweet.

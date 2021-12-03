@@ -3,6 +3,7 @@ package com.config;
 import io.dropwizard.Configuration;
 import org.springframework.stereotype.Component;
 import twitter4j.conf.ConfigurationBuilder;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,13 +11,14 @@ import java.util.Properties;
 
 @Component
 public class TWConfiguration extends Configuration {
-    String filepath = "twitter4j.yml";
-    String accessTokenSecret = "";
-    String consumerSecret = "";
-    String consumerKey = "";
-    String accessToken = "";
-    Properties properties = new Properties();
-    FileInputStream fileInputStream;
+    private final String filepath = "twitter4j.yml";
+    private final Properties properties = new Properties();
+    private String accessTokenSecret = "";
+    private String consumerSecret = "";
+    private String consumerKey = "";
+    private String accessToken = "";
+    private FileInputStream fileInputStream;
+
     {
         try {
             fileInputStream = new FileInputStream(filepath);
@@ -33,6 +35,10 @@ public class TWConfiguration extends Configuration {
         consumerKey = properties.getProperty("consumerKey");
         accessToken = properties.getProperty("accessToken");
     }
+
+    /**
+     * @return configurationbuilder object
+     */
     public ConfigurationBuilder configurationBuilder() {
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.setDebugEnabled(true)

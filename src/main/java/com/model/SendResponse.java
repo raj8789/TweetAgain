@@ -1,4 +1,5 @@
 package com.model;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -6,12 +7,13 @@ import lombok.Setter;
 @Setter
 public class SendResponse {
     private String message;
+
     /**
      * Used to send response on tweet posted.
+     *
      * @param message is a response message.
      */
-    public SendResponse(String message)
-    {
-        this.message=message;
+    public SendResponse(String message) {
+        this.message = message;
     }
 }
