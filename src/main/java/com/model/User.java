@@ -1,35 +1,38 @@
+/**
+ * User class contain user details
+ */
 package com.model;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class User {
-    String twitterHandle;
-    String name;
-    String profileImageUrl;
+    /**
+     * .
+     * twitterHandle takes timeline
+     */
+    private String twitterHandle;
+    /**
+     * .
+     * name takes name of user
+     */
+    private String name;
+    /**
+     * .
+     * profileImageUrl takes profileImageUrl
+     */
+    private String profileImageUrl;
 
-    public User(String twitterHandle, String name, String profileImageUrl) {
-        this.twitterHandle = twitterHandle;
-        this.name = name;
-        this.profileImageUrl = profileImageUrl;
-    }
-    public String getTwitterHandle() {
-        return twitterHandle;
-    }
-
-    public void setTwitterHandle(String twitterHandle) {
-        this.twitterHandle = twitterHandle;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getProfileImageUrl() {
-        return profileImageUrl;
-    }
-
-    public void setProfileImageUrl(String profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
+    /**
+     * @param ttwitterHandle   specifies ScreenName of user who posted tweet.
+     * @param nname            specifies name of user who posted tweet.
+     * @param pprofileImageUrl specifies URL profileImage of user who posted tweet.
+     */
+    public User(final String ttwitterHandle, final String nname, final String pprofileImageUrl) {
+        this.twitterHandle = ttwitterHandle;
+        this.name = nname;
+        this.profileImageUrl = pprofileImageUrl;
     }
 }

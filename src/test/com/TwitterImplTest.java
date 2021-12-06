@@ -1,4 +1,3 @@
-
 import com.model.TwitterResponse;
 import com.service.TwitterImpl;
 import org.junit.Assert;
@@ -7,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import twitter4j.*;
+
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
 import java.text.ParseException;
@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -92,7 +93,7 @@ public class TwitterImplTest
         when(responseList.size()).thenReturn(0);
         when(twitter.getHomeTimeline()).thenReturn(responseList);
        ArrayList<TwitterResponse> actual = twitterImpl.fetchLatestTweet();
-       Assert.assertEquals(Arrays.asList(), actual);
+        Assert.assertEquals(Arrays.asList(), actual);
     }
     @Test(expected = InternalServerErrorException.class)
     public void testCase_exceptionCase() throws TwitterException {

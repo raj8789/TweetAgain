@@ -1,40 +1,47 @@
 package com.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class TwitterResponse {
-    String message;
-    User user;
-    String createdAt;
+    /**
+     * .
+     * Message of user
+     */
+    private String message;
+    /**
+     * .
+     * User class object
+     */
+    private User user;
+    /**
+     * .
+     * it takes date created
+     */
+    private String createdAt;
 
-    public TwitterResponse(String message, String twitterHandle, String name, String profileImageUrl, String createdAt) {
-        this.message = message;
-        this.user = new User(twitterHandle, name, profileImageUrl);
-        this.createdAt = createdAt;
+    /**
+     * .
+     * TwitterResponse returns the details of user who posted tweet.Details are as followed:
+     *
+     * @param messages         specifies tweet that has been posted.
+     * @param twitterHandles   specifies ScreenName of user who posted the tweet.
+     * @param names            specifies name of user who posted the tweet.
+     * @param profileImageUrls specifies URL of profile image of user who posted the tweet.
+     * @param createdat        specifies date and time tweet posted.
+     */
+    public TwitterResponse(final String messages, final String twitterHandles, final String names, final String profileImageUrls, final String createdat) {
+        this.message = messages;
+        this.user = new User(twitterHandles, names, profileImageUrls);
+        this.createdAt = createdat;
     }
 
+    /**
+     * .
+     * Constructor
+     */
     public TwitterResponse() {
-
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-    public String setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-        return createdAt;
     }
 }
